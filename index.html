@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio — Abdul‑Rehman</title>
+  <meta name="description" content="Abdul‑Rehman — Junior Developer (Shopify, WooCommerce, WordPress). Selected work, services, experience, and contact." />
+  <style>
+    :root{ --bg:#0b0b0c;--panel:#141417;--text:#e7e6e4;--muted:#a9a9b0;--brand:#ffd269;--line:#2a2a32 }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:linear-gradient(180deg,#0a0a0b 0%,#101013 50%,#0a0a0b 100%);color:var(--text);font:400 15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    .container{max-width:1120px;margin-inline:auto;padding:0 16px}
+    header.nav{position:sticky;top:0;z-index:20;backdrop-filter:saturate(120%) blur(10px);background:rgba(0,0,0,.35);border-bottom:1px solid var(--line)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+    .btn{display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:#000;font-weight:700;border-radius:999px;padding:10px 16px}
+
+    .hero{padding:64px 0 24px}
+    .hero h1{font-size:42px;line-height:1.05;margin:0 0 10px;font-weight:800}
+    .hero p{margin:6px 0;color:var(--muted)}
+
+    .section{padding:56px 0}
+    .section h2{font-size:28px;margin:0 0 8px}
+    .kicker{letter-spacing:.18em;text-transform:uppercase;color:#b8b8bf;font-size:12px}
+
+    .grid{display:grid;gap:16px}
+    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    @media (max-width:980px){.grid-3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (max-width:640px){.grid-3,.grid-2{grid-template-columns:1fr}}
+
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;transition:transform .25s ease, border-color .25s ease}
+    .card:hover{transform:translateY(-4px);border-color:#3a3a45}
+    .tag{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:2px 8px;font-size:12px;color:#cfcfd6}
+
+    .thumb{aspect-ratio:4/3;border-radius:12px;background:#1b1b23;display:grid;place-items:center;color:#888;margin-bottom:12px;overflow:hidden}
+    .title{font-weight:700;margin:0}
+    .subtitle{color:#e7d3a7;margin:2px 0}
+    .muted{color:var(--muted)}
+
+    .search{display:flex;align-items:center;gap:8px;margin:8px 0 20px}
+    .search input{flex:1;background:#15151a;border:1px solid var(--line);border-radius:12px;padding:10px 12px;color:var(--text);outline:none}
+    .count{font-size:12px;color:var(--muted)}
+
+    footer{border-top:1px solid var(--line);background:#0b0b0e}
+    footer .inner{display:flex;gap:12px;justify-content:space-between;align-items:center;padding:18px 0}
+
+    /* On-scroll reveal */
+    .reveal{opacity:0;transform:translate3d(0,16px,0);will-change:transform,opacity}
+    .reveal.in{opacity:1;transform:translate3d(0,0,0);transition:transform .5s ease,opacity .5s ease}
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <div class="brand" id="brandName" style="font-weight:800">Abdul‑Rehman</div>
+      <nav class="links" style="display:flex;gap:16px;color:#d7d7de;font-size:14px">
+        <a href="#Services">Services</a>
+        <a href="#Works">Works</a>
+        <a href="#Experience">Experience</a>
+        <a href="#About">About</a>
+        <a href="#Contact">Contact</a>
+      </nav>
+      <a class="btn" href="#Contact">Let's Work</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <h1 class="reveal">Abdul‑Rehman — Junior Developer</h1>
+      <p class="reveal">Shopify • WooCommerce • WordPress (Theme customization, plugins, payments, CRO)</p>
+      <p class="reveal muted" style="text-transform:uppercase;letter-spacing:.12em;font-size:12px">E‑commerce Development • UI/UX • Performance</p>
+      <p class="reveal" style="color:#72f0b5">Available for Work — Oct ’25 · Lahore, PK</p>
+    </section>
+
+    <section id="Services" class="section container">
+      <div class="kicker">What I Do</div>
+      <h2>Services</h2>
+      <div class="grid grid-3">
+        <div class="card reveal">
+          <div class="muted" style="text-transform:uppercase;letter-spacing:.2em;font-size:12px">(01)</div>
+          <h3>E‑commerce Development</h3>
+          <p class="muted">Shopify, WooCommerce — theme design, custom sections, product/catalog setup, performance tuning.</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+            <span class="tag">Shopify OS 2.0</span><span class="tag">WooCommerce</span><span class="tag">GA4</span>
+          </div>
+        </div>
+        <div class="card reveal">
+          <div class="muted" style="text-transform:uppercase;letter-spacing:.2em;font-size:12px">(02)</div>
+          <h3>Integrations & Payments</h3>
+          <p class="muted">Payment gateways, shipping plugins, third‑party tools, analytics, and automation.</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+            <span class="tag">Stripe</span><span class="tag">PayFast</span><span class="tag">Shiprocket</span>
+          </div>
+        </div>
+        <div class="card reveal">
+          <div class="muted" style="text-transform:uppercase;letter-spacing:.2em;font-size:12px">(03)</div>
+          <h3>Maintenance & Troubleshooting</h3>
+          <p class="muted">Bug fixing, updates, responsive design, SEO basics, performance optimization, CRO.</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+            <span class="tag">Performance</span><span class="tag">A11y</span><span class="tag">CRO</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="Works" class="section container">
+      <div class="kicker">Selected</div>
+      <h2>Works</h2>
+      <div class="search">
+        <input id="search" placeholder="Search (e.g. Shopify, Fragrance, PMax)" />
+        <span class="count" id="count">0 results</span>
+      </div>
+      <div id="grid" class="grid grid-3"></div>
+    </section>
+
+    <section id="Experience" class="section container">
+      <div class="kicker">Track</div>
+      <h2>Experience</h2>
+      <div class="card reveal">
+        <div class="muted" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+          <span><strong>Junior Developer</strong> — Growex</span>
+          <span>Apr 2024 – Present</span>
+        </div>
+        <ul class="muted" style="padding-left:18px;margin:8px 0">
+          <li>Developed & customized e‑commerce websites using Shopify, WooCommerce & WordPress.</li>
+          <li>Integrated payment gateways, shipping plugins, and third‑party tools to enhance performance.</li>
+          <li>Collaborated with cross‑functional teams to deliver client‑focused solutions under deadlines.</li>
+          <li>Hands‑on troubleshooting, platform customization, and responsive design.</li>
+        </ul>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:16px">
+        <div class="card reveal">
+          <h3>Education</h3>
+          <p class="muted"><strong>Virtual University — Lahore</strong><br/>BS (Software Engineering), 2025–2029</p>
+        </div>
+        <div class="card reveal">
+          <h3>Communication & Leadership</h3>
+          <ul class="muted" style="padding-left:18px;margin:8px 0">
+            <li>Clear client communication; tailored solutions to requirements.</li>
+            <li>Presented updates & progress to stakeholders with transparency.</li>
+            <li>Led group tasks for timely delivery & high‑quality results.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="About" class="section container">
+      <div class="kicker">Who</div>
+      <h2>About</h2>
+      <div class="grid grid-2">
+        <div class="card reveal">
+          <h3>Objective</h3>
+          <p class="muted">Results‑driven Junior Developer with hands‑on experience in building and optimizing e‑commerce platforms using Shopify, WooCommerce, and WordPress. Passionate about user‑friendly, high‑performing websites and eager to contribute to innovative projects.</p>
+        </div>
+        <div class="card reveal">
+          <h3>Skills & Abilities</h3>
+          <ul class="muted" style="padding-left:18px;margin:8px 0">
+            <li><strong>E‑commerce:</strong> Shopify, WooCommerce</li>
+            <li><strong>Web:</strong> WordPress, HTML, CSS</li>
+            <li><strong>Customization:</strong> Theme design, plugin integration, gateways</li>
+            <li><strong>Maintenance:</strong> Bug fixing, performance, updates</li>
+            <li><strong>Soft:</strong> Teamwork, problem‑solving, adaptability, communication</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="Contact" class="section container">
+      <div class="kicker">Say Hello</div>
+      <h2>Contact</h2>
+      <div class="card reveal">
+        <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:8px" class="muted">
+          <span>📍 Lahore, PK</span>
+          <a id="phoneLink" href="tel:+923114981846">📞 +92 311 4981846</a>
+          <a id="emailLink" href="mailto:rehmanverse.pro@gmail.com">✉️ rehmanverse.pro@gmail.com</a>
+        </div>
+        <form onsubmit="return false" style="display:grid;gap:10px">
+          <input placeholder="Your name" class="input" style="background:#15151a;border:1px solid var(--line);border-radius:12px;padding:10px 12px;color:var(--text)" />
+          <input type="email" placeholder="Email" class="input" style="background:#15151a;border:1px solid var(--line);border-radius:12px;padding:10px 12px;color:var(--text)" />
+          <textarea rows="5" placeholder="Tell me about your project..." style="background:#15151a;border:1px solid var(--line);border-radius:12px;padding:10px 12px;color:var(--text)"></textarea>
+          <button class="btn" type="button">Send Message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container inner">
+      <div>© <span id="year"></span> <span id="footerName">Abdul‑Rehman</span></div>
+      <div style="display:flex;gap:12px" class="muted">
+        <a href="#Services">Services</a>
+        <a href="#Works">Works</a>
+        <a href="#Experience">Experience</a>
+        <a href="#About">About</a>
+        <a href="#Contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  // ==== CONFIG (filled from your CV) =====================================
+  const YOUR_NAME = 'Abdul‑Rehman';
+  const CONTACT_EMAIL = 'rehmanverse.pro@gmail.com';
+  const PHONE = '+923114981846';
+  const LOCATION = 'Lahore, PK';
+
+  // Reference sites — curated
+  const REF_SITES = [
+    { url: 'https://bragg.pk/',          title: 'Bragg Pakistan',     subtitle: 'Apple Cider Vinegar (FMCG)', year: '2025', tags: ['Marketplace','Content','Performance'] },
+    { url: 'https://www.sheikhjee.com/', title: 'SheikhJee',          subtitle: 'Home Furnishings',            year: '2025', tags: ['Shopify','CRO','Catalog'] },
+    { url: 'https://oakandteak.pk/',     title: 'Oak & Teak',         subtitle: 'Furniture',                   year: '2025', tags: ['Shopify','UX','Performance'] },
+    { url: 'https://donvalleypharma.com/',title: 'Don Valley Pharma',  subtitle: 'Pharma Manufacturer',         year: '2025', tags: ['Corporate','WordPress','IA'] },
+    { url: 'https://aapkaclinic.org/',   title: 'Aap Ka Clinic',      subtitle: 'Healthcare / Non-profit',     year: '2025', tags: ['WordPress','SEO','Donations'] },
+    { url: 'https://sairarizwan.pk/',    title: 'Saira Rizwan',       subtitle: 'Couture & Pret',              year: '2025', tags: ['Shopify','Global','CRO'] },
+    { url: 'https://1ststep.pk/',        title: '1st Step',           subtitle: 'Footwear & Accessories',      year: '2025', tags: ['Shopify','CRM','Sale Ops'] },
+    { url: 'https://jafperfumes.com/',   title: 'JAF Perfumes',       subtitle: 'D2C Fragrance',               year: '2025', tags: ['Shopify','UGC Reviews','Bundles'] },
+    { url: 'https://mayapret.com/',      title: 'MAYA Pret',          subtitle: 'Luxury Pret & Bridals',       year: '2025', tags: ['Shopify','Launch','Creator'] },
+  ];
+
+  const CORS_PROXY = '';
+
+  // ==== UTILITIES ========================================================
+  function $(sel, root=document){ return root.querySelector(sel); }
+  function el(tag, attrs={}){ const n=document.createElement(tag); Object.assign(n, attrs); return n; }
+  function validateDataShape(data){
+    const problems=[]; if (!Array.isArray(data)) problems.push('REF_SITES must be an array');
+    (data||[]).forEach((p,i)=>{ if (!p||typeof p!=='object') problems.push(`Item ${i} must be an object`); ['url','title'].forEach(k=>{ if(!p[k]) problems.push(`Item ${i} missing ${k}`); }); });
+    return problems;
+  }
+  function extractMeta(html){
+    const pick=(re)=>{ const m=html.match(re); return (m&&m[1]||'').trim(); };
+    const ogt = pick(/<meta[^>]+property=["']og:title["'][^>]+content=["']([^"']+)["'][^>]*>/i);
+    const twt = pick(/<meta[^>]+name=["']twitter:title["'][^>]+content=["']([^"']+)["'][^>]*>/i);
+    const tit = pick(/<title[^>]*>([^<]+)<\/title>/i);
+    const desc = pick(/<meta[^>]+name=["']description["'][^>]+content=["']([^"']+)["'][^>]*>/i) || pick(/<meta[^>]+property=["']og:description["'][^>]+content=["']([^"']+)["'][^>]*>/i);
+    const img = pick(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["'][^>]*>/i) || pick(/<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["'][^>]*>/i);
+    return { title: ogt||twt||tit||'', description: desc||'', image: img||'' };
+  }
+  async function enrichViaProxy(url){ if(!CORS_PROXY) return null; try{ const res = await fetch(CORS_PROXY+encodeURIComponent(url), { cache:'no-store' }); if(!res.ok) return null; const html = await res.text(); return extractMeta(html); }catch(err){ console.warn('Proxy fetch failed for', url, err); return null; } }
+
+  // ==== RENDER ===========================================================
+  function renderProjects(list){
+    const grid = $('#grid'); grid.innerHTML='';
+    list.forEach((p, idx)=>{
+      const a = el('a', { href:p.url, target:'_blank', rel:'noopener noreferrer', className:'card reveal' });
+      a.style.transitionDelay = ((idx%6)*50)+'ms';
+      const imgWrap = el('div', { className:'thumb' });
+      const img = el('img', { alt:p.title||'Thumbnail' });
+      if(p.image){ img.src = p.image; img.loading='lazy'; imgWrap.appendChild(img); } else { imgWrap.textContent='Thumbnail'; }
+      const h3 = el('h3', { className:'title', textContent:p.title||'Untitled' });
+      const sub = el('div', { className:'subtitle', textContent:p.subtitle||'' });
+      const year = p.year ? el('span', { className:'tag', textContent:p.year }) : null;
+      const sum = el('p', { className:'muted', textContent:p.description||p.summary||'' });
+      const tagWrap = el('div'); tagWrap.style.display='flex'; tagWrap.style.flexWrap='wrap'; tagWrap.style.gap='8px'; tagWrap.style.marginTop='8px';
+      (p.tags||[]).forEach(t=> tagWrap.appendChild(el('span',{className:'tag', textContent:t})) );
+      a.append(imgWrap,h3,sub, ...(year?[year]:[]), sum, tagWrap, el('div',{className:'muted',textContent:'Visit ↗', style:'text-align:right;margin-top:6px'}));
+      grid.appendChild(a);
+    });
+    $('#count').textContent = list.length + (list.length===1?' result':' results');
+    triggerReveal();
+  }
+
+  function setupSearch(projects){
+    const input = $('#search');
+    input.addEventListener('input', ()=>{
+      const term = input.value.trim().toLowerCase();
+      const filtered = !term ? projects : projects.filter(p => (
+        [p.title||'', p.subtitle||'', (p.tags||[]).join(' '), p.description||'', p.summary||''].join(' ').toLowerCase().includes(term)
+      ));
+      renderProjects(filtered);
+    });
+  }
+
+  // ==== SCROLL ANIMATIONS ===============================================
+  const IO = new IntersectionObserver((entries)=>{
+    for (const e of entries){ if (e.isIntersecting){ e.target.classList.add('in'); IO.unobserve(e.target); } }
+  }, { root:null, rootMargin:'0px 0px -10% 0px', threshold:0.08 });
+  function triggerReveal(){ document.querySelectorAll('.reveal:not(.in)').forEach(el=>IO.observe(el)); }
+
+  // ==== MAIN BOOT ========================================================
+  (async function main(){
+    // Brand + footer
+    $('#brandName').textContent = YOUR_NAME;
+    $('#footerName').textContent = YOUR_NAME;
+    document.title = `Portfolio — ${YOUR_NAME}`;
+    $('#year').textContent = new Date().getFullYear();
+    const elMail = document.getElementById('emailLink'); if (elMail){ elMail.href = 'mailto:'+CONTACT_EMAIL; elMail.textContent = '✉️ '+CONTACT_EMAIL; }
+    const elPhone = document.getElementById('phoneLink'); if (elPhone){ elPhone.href = 'tel:'+PHONE.replace(/\s/g,''); elPhone.textContent = '📞 '+PHONE; }
+
+    try{ const issues = validateDataShape(REF_SITES); if(issues.length){ console.warn('Data shape issues:', issues); } }catch(err){ console.warn('Validation skipped', err); }
+
+    let projects = REF_SITES.map(s => ({...s}));
+    if (CORS_PROXY){
+      try{
+        const enriched = await Promise.all(projects.map(async (p)=>{
+          const m = await enrichViaProxy(p.url);
+          return m ? { ...p, title: m.title || p.title, description: m.description || '', image: m.image || '' } : p;
+        }));
+        projects = enriched;
+      }catch(err){ console.warn('Enrichment failed:', err); }
+    }
+
+    setupSearch(projects);
+    renderProjects(projects);
+    triggerReveal();
+  })();
+  </script>
+</body>
+</html>
