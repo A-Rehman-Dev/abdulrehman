@@ -5,64 +5,114 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Portfolio — Abdul‑Rehman</title>
   <meta name="description" content="Abdul‑Rehman — Junior Developer (Shopify, WooCommerce, WordPress). Selected work, services, experience, and contact." />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
+  
   <style>
     :root{ --bg:#0b0b0c;--panel:#141417;--text:#e7e6e4;--muted:#a9a9b0;--brand:#ffd269;--line:#2a2a32 }
-    *{box-sizing:border-box}
+    *{box-sizing:border-box; margin:0; padding:0}
     html,body{height:100%}
-    body{margin:0;background:linear-gradient(180deg,#0a0a0b 0%,#101013 50%,#0a0a0b 100%);color:var(--text);font:400 15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
+    body{margin:0;background:linear-gradient(180deg,#0a0a0b 0%,#101013 50%,#0a0a0b 100%);color:var(--text);font:400 15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial; overflow-x:hidden}
     a{color:inherit;text-decoration:none}
     img{display:block;max-width:100%}
-    .container{max-width:1120px;margin-inline:auto;padding:0 16px}
+    .container{max-width:1120px;margin-inline:auto;padding:0 20px}
+    
+    /* Mobile First Approach */
     header.nav{position:sticky;top:0;z-index:20;backdrop-filter:saturate(120%) blur(10px);background:rgba(0,0,0,.35);border-bottom:1px solid var(--line)}
-    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
-    .btn{display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:#000;font-weight:700;border-radius:999px;padding:10px 16px}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:12px 0; flex-wrap:wrap; gap:12px}
+    .btn{display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:#000;font-weight:700;border-radius:999px;padding:10px 16px; font-size:14px}
 
-    .hero{padding:64px 0 24px}
-    .hero h1{font-size:42px;line-height:1.05;margin:0 0 10px;font-weight:800}
-    .hero p{margin:6px 0;color:var(--muted)}
+    /* Mobile Navigation */
+    .nav-links{display:flex;gap:16px;color:#d7d7de;font-size:14px; align-items:center}
+    .mobile-menu-btn{display:none; background:none; border:none; color:var(--text); font-size:20px; cursor:pointer}
 
-    .section{padding:56px 0}
-    .section h2{font-size:28px;margin:0 0 8px}
-    .kicker{letter-spacing:.18em;text-transform:uppercase;color:#b8b8bf;font-size:12px}
+    .hero{padding:48px 0 24px}
+    .hero h1{font-size:32px;line-height:1.1;margin:0 0 12px;font-weight:800}
+    .hero p{margin:8px 0;color:var(--muted); font-size:14px}
+
+    .section{padding:48px 0}
+    .section h2{font-size:24px;margin:0 0 8px}
+    .kicker{letter-spacing:.18em;text-transform:uppercase;color:#b8b8bf;font-size:12px; margin-bottom:8px}
 
     .grid{display:grid;gap:16px}
-    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
-    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
-    @media (max-width:980px){.grid-3{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    @media (max-width:640px){.grid-3,.grid-2{grid-template-columns:1fr}}
+    .grid-3{grid-template-columns:1fr}
+    .grid-2{grid-template-columns:1fr}
 
-    .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;transition:transform .25s ease, border-color .25s ease}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;transition:transform .25s ease, border-color .25s ease}
     .card:hover{transform:translateY(-4px);border-color:#3a3a45}
-    .tag{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:2px 8px;font-size:12px;color:#cfcfd6}
+    .tag{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-size:11px;color:#cfcfd6; margin:2px}
 
     .thumb{aspect-ratio:4/3;border-radius:12px;background:#1b1b23;display:grid;place-items:center;color:#888;margin-bottom:12px;overflow:hidden}
-    .title{font-weight:700;margin:0}
-    .subtitle{color:#e7d3a7;margin:2px 0}
-    .muted{color:var(--muted)}
+    .title{font-weight:700;margin:0; font-size:16px}
+    .subtitle{color:#e7d3a7;margin:4px 0; font-size:14px}
+    .muted{color:var(--muted); font-size:14px}
 
-    .search{display:flex;align-items:center;gap:8px;margin:8px 0 20px}
-    .search input{flex:1;background:#15151a;border:1px solid var(--line);border-radius:12px;padding:10px 12px;color:var(--text);outline:none}
-    .count{font-size:12px;color:var(--muted)}
+    .search{display:flex;align-items:center;gap:8px;margin:8px 0 20px; flex-direction:column}
+    .search input{width:100%;background:#15151a;border:1px solid var(--line);border-radius:12px;padding:12px;color:var(--text);outline:none; font-size:14px}
+    .count{font-size:12px;color:var(--muted); align-self:flex-start}
 
-    footer{border-top:1px solid var(--line);background:#0b0b0e}
-    footer .inner{display:flex;gap:12px;justify-content:space-between;align-items:center;padding:18px 0}
+    footer{border-top:1px solid var(--line);background:#0b0b0e; padding:20px 0}
+    footer .inner{display:flex;gap:16px;flex-direction:column;align-items:center;padding:0; text-align:center}
+    .footer-links{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+
+    /* Form Styles */
+    .contact-form{display:grid;gap:12px}
+    .form-input{background:#15151a;border:1px solid var(--line);border-radius:12px;padding:12px;color:var(--text);outline:none; font-size:14px; width:100%}
 
     /* On-scroll reveal */
     .reveal{opacity:0;transform:translate3d(0,16px,0);will-change:transform,opacity}
     .reveal.in{opacity:1;transform:translate3d(0,0,0);transition:transform .5s ease,opacity .5s ease}
+
+    /* Tablet Styles */
+    @media (min-width: 768px) {
+        .container{padding:0 24px}
+        .hero{padding:64px 0 24px}
+        .hero h1{font-size:38px}
+        .section{padding:56px 0}
+        .section h2{font-size:28px}
+        .grid-3{grid-template-columns:repeat(2,1fr)}
+        .grid-2{grid-template-columns:repeat(2,1fr)}
+        .search{flex-direction:row}
+        .search input{flex:1}
+        .count{align-self:center}
+        footer .inner{flex-direction:row;justify-content:space-between;align-items:center;text-align:left; padding:18px 0}
+        .footer-links{justify-content:flex-end}
+        .nav-links{display:flex !important}
+    }
+
+    /* Desktop Styles */
+    @media (min-width: 1024px) {
+        .hero h1{font-size:42px}
+        .grid-3{grid-template-columns:repeat(3,1fr)}
+        .mobile-menu-btn{display:none}
+    }
+
+    /* Mobile Menu Styles */
+    @media (max-width: 767px) {
+        .nav-links{display:none; flex-direction:column; position:absolute; top:100%; left:0; right:0; background:var(--panel); border-bottom:1px solid var(--line); padding:20px; gap:16px}
+        .nav-links.active{display:flex}
+        .mobile-menu-btn{display:block}
+        .nav-inner{position:relative}
+    }
   </style>
 </head>
 <body>
   <header class="nav">
     <div class="container nav-inner">
       <div class="brand" id="brandName" style="font-weight:800">Abdul‑Rehman</div>
-      <nav class="links" style="display:flex;gap:16px;color:#d7d7de;font-size:14px">
-        <a href="#Services">Services</a>
-        <a href="#Works">Works</a>
-        <a href="#Experience">Experience</a>
-        <a href="#About">About</a>
-        <a href="#Contact">Contact</a>
+      
+      <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+      
+      <nav class="nav-links" id="navLinks">
+        <a href="#Services" class="nav-link">Services</a>
+        <a href="#Works" class="nav-link">Works</a>
+        <a href="#Experience" class="nav-link">Experience</a>
+        <a href="#About" class="nav-link">About</a>
+        <a href="#Contact" class="nav-link">Contact</a>
       </nav>
+      
       <a class="btn" href="#Contact">Let's Work</a>
     </div>
   </header>
@@ -72,7 +122,7 @@
       <h1 class="reveal">Abdul‑Rehman — Junior Developer</h1>
       <p class="reveal">Shopify • WooCommerce • WordPress (Theme customization, plugins, payments, CRO)</p>
       <p class="reveal muted" style="text-transform:uppercase;letter-spacing:.12em;font-size:12px">E‑commerce Development • UI/UX • Performance</p>
-      <p class="reveal" style="color:#72f0b5">Available for Work — Oct ’25 · Lahore, PK</p>
+      <p class="reveal" style="color:#72f0b5">Available for Work — Oct '25 · Lahore, PK</p>
     </section>
 
     <section id="Services" class="section container">
@@ -81,25 +131,25 @@
       <div class="grid grid-3">
         <div class="card reveal">
           <div class="muted" style="text-transform:uppercase;letter-spacing:.2em;font-size:12px">(01)</div>
-          <h3>E‑commerce Development</h3>
+          <h3 style="margin:8px 0; font-size:18px">E‑commerce Development</h3>
           <p class="muted">Shopify, WooCommerce — theme design, custom sections, product/catalog setup, performance tuning.</p>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+          <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:12px">
             <span class="tag">Shopify OS 2.0</span><span class="tag">WooCommerce</span><span class="tag">GA4</span>
           </div>
         </div>
         <div class="card reveal">
           <div class="muted" style="text-transform:uppercase;letter-spacing:.2em;font-size:12px">(02)</div>
-          <h3>Integrations & Payments</h3>
+          <h3 style="margin:8px 0; font-size:18px">Integrations & Payments</h3>
           <p class="muted">Payment gateways, shipping plugins, third‑party tools, analytics, and automation.</p>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+          <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:12px">
             <span class="tag">Stripe</span><span class="tag">PayFast</span><span class="tag">Shiprocket</span>
           </div>
         </div>
         <div class="card reveal">
           <div class="muted" style="text-transform:uppercase;letter-spacing:.2em;font-size:12px">(03)</div>
-          <h3>Maintenance & Troubleshooting</h3>
+          <h3 style="margin:8px 0; font-size:18px">Maintenance & Troubleshooting</h3>
           <p class="muted">Bug fixing, updates, responsive design, SEO basics, performance optimization, CRO.</p>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+          <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:12px">
             <span class="tag">Performance</span><span class="tag">A11y</span><span class="tag">CRO</span>
           </div>
         </div>
@@ -120,28 +170,28 @@
       <div class="kicker">Track</div>
       <h2>Experience</h2>
       <div class="card reveal">
-        <div class="muted" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+        <div class="muted" style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
           <span><strong>Junior Developer</strong> — Growex</span>
           <span>Apr 2024 – Present</span>
         </div>
-        <ul class="muted" style="padding-left:18px;margin:8px 0">
-          <li>Developed & customized e‑commerce websites using Shopify, WooCommerce & WordPress.</li>
-          <li>Integrated payment gateways, shipping plugins, and third‑party tools to enhance performance.</li>
-          <li>Collaborated with cross‑functional teams to deliver client‑focused solutions under deadlines.</li>
+        <ul class="muted" style="padding-left:20px;margin:8px 0">
+          <li style="margin-bottom:6px">Developed & customized e‑commerce websites using Shopify, WooCommerce & WordPress.</li>
+          <li style="margin-bottom:6px">Integrated payment gateways, shipping plugins, and third‑party tools to enhance performance.</li>
+          <li style="margin-bottom:6px">Collaborated with cross‑functional teams to deliver client‑focused solutions under deadlines.</li>
           <li>Hands‑on troubleshooting, platform customization, and responsive design.</li>
         </ul>
       </div>
 
-      <div class="grid grid-2" style="margin-top:16px">
+      <div class="grid grid-2" style="margin-top:20px">
         <div class="card reveal">
-          <h3>Education</h3>
+          <h3 style="margin-bottom:12px">Education</h3>
           <p class="muted"><strong>Virtual University — Lahore</strong><br/>BS (Software Engineering), 2025–2029</p>
         </div>
         <div class="card reveal">
-          <h3>Communication & Leadership</h3>
-          <ul class="muted" style="padding-left:18px;margin:8px 0">
-            <li>Clear client communication; tailored solutions to requirements.</li>
-            <li>Presented updates & progress to stakeholders with transparency.</li>
+          <h3 style="margin-bottom:12px">Communication & Leadership</h3>
+          <ul class="muted" style="padding-left:20px">
+            <li style="margin-bottom:6px">Clear client communication; tailored solutions to requirements.</li>
+            <li style="margin-bottom:6px">Presented updates & progress to stakeholders with transparency.</li>
             <li>Led group tasks for timely delivery & high‑quality results.</li>
           </ul>
         </div>
@@ -153,16 +203,16 @@
       <h2>About</h2>
       <div class="grid grid-2">
         <div class="card reveal">
-          <h3>Objective</h3>
+          <h3 style="margin-bottom:12px">Objective</h3>
           <p class="muted">Results‑driven Junior Developer with hands‑on experience in building and optimizing e‑commerce platforms using Shopify, WooCommerce, and WordPress. Passionate about user‑friendly, high‑performing websites and eager to contribute to innovative projects.</p>
         </div>
         <div class="card reveal">
-          <h3>Skills & Abilities</h3>
-          <ul class="muted" style="padding-left:18px;margin:8px 0">
-            <li><strong>E‑commerce:</strong> Shopify, WooCommerce</li>
-            <li><strong>Web:</strong> WordPress, HTML, CSS</li>
-            <li><strong>Customization:</strong> Theme design, plugin integration, gateways</li>
-            <li><strong>Maintenance:</strong> Bug fixing, performance, updates</li>
+          <h3 style="margin-bottom:12px">Skills & Abilities</h3>
+          <ul class="muted" style="padding-left:20px">
+            <li style="margin-bottom:6px"><strong>E‑commerce:</strong> Shopify, WooCommerce</li>
+            <li style="margin-bottom:6px"><strong>Web:</strong> WordPress, HTML, CSS</li>
+            <li style="margin-bottom:6px"><strong>Customization:</strong> Theme design, plugin integration, gateways</li>
+            <li style="margin-bottom:6px"><strong>Maintenance:</strong> Bug fixing, performance, updates</li>
             <li><strong>Soft:</strong> Teamwork, problem‑solving, adaptability, communication</li>
           </ul>
         </div>
@@ -173,16 +223,16 @@
       <div class="kicker">Say Hello</div>
       <h2>Contact</h2>
       <div class="card reveal">
-        <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:8px" class="muted">
+        <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px" class="muted">
           <span>📍 Lahore, PK</span>
           <a id="phoneLink" href="tel:+923114981846">📞 +92 311 4981846</a>
           <a id="emailLink" href="mailto:rehmanverse.pro@gmail.com">✉️ rehmanverse.pro@gmail.com</a>
         </div>
-        <form onsubmit="return false" style="display:grid;gap:10px">
-          <input placeholder="Your name" class="input" style="background:#15151a;border:1px solid var(--line);border-radius:12px;padding:10px 12px;color:var(--text)" />
-          <input type="email" placeholder="Email" class="input" style="background:#15151a;border:1px solid var(--line);border-radius:12px;padding:10px 12px;color:var(--text)" />
-          <textarea rows="5" placeholder="Tell me about your project..." style="background:#15151a;border:1px solid var(--line);border-radius:12px;padding:10px 12px;color:var(--text)"></textarea>
-          <button class="btn" type="button">Send Message</button>
+        <form onsubmit="return false" class="contact-form">
+          <input placeholder="Your name" class="form-input" />
+          <input type="email" placeholder="Email" class="form-input" />
+          <textarea rows="5" placeholder="Tell me about your project..." class="form-input"></textarea>
+          <button class="btn" type="button" style="justify-content:center">Send Message</button>
         </form>
       </div>
     </section>
@@ -191,7 +241,7 @@
   <footer>
     <div class="container inner">
       <div>© <span id="year"></span> <span id="footerName">Abdul‑Rehman</span></div>
-      <div style="display:flex;gap:12px" class="muted">
+      <div class="footer-links muted">
         <a href="#Services">Services</a>
         <a href="#Works">Works</a>
         <a href="#Experience">Experience</a>
@@ -255,9 +305,9 @@
       const sub = el('div', { className:'subtitle', textContent:p.subtitle||'' });
       const year = p.year ? el('span', { className:'tag', textContent:p.year }) : null;
       const sum = el('p', { className:'muted', textContent:p.description||p.summary||'' });
-      const tagWrap = el('div'); tagWrap.style.display='flex'; tagWrap.style.flexWrap='wrap'; tagWrap.style.gap='8px'; tagWrap.style.marginTop='8px';
+      const tagWrap = el('div'); tagWrap.style.display='flex'; tagWrap.style.flexWrap='wrap'; tagWrap.style.gap='4px'; tagWrap.style.marginTop='12px';
       (p.tags||[]).forEach(t=> tagWrap.appendChild(el('span',{className:'tag', textContent:t})) );
-      a.append(imgWrap,h3,sub, ...(year?[year]:[]), sum, tagWrap, el('div',{className:'muted',textContent:'Visit ↗', style:'text-align:right;margin-top:6px'}));
+      a.append(imgWrap,h3,sub, ...(year?[year]:[]), sum, tagWrap, el('div',{className:'muted',textContent:'Visit ↗', style:'text-align:right;margin-top:8px'}));
       grid.appendChild(a);
     });
     $('#count').textContent = list.length + (list.length===1?' result':' results');
@@ -272,6 +322,30 @@
         [p.title||'', p.subtitle||'', (p.tags||[]).join(' '), p.description||'', p.summary||''].join(' ').toLowerCase().includes(term)
       ));
       renderProjects(filtered);
+    });
+  }
+
+  // ==== MOBILE MENU =====================================================
+  function setupMobileMenu() {
+    const menuBtn = $('#mobileMenuBtn');
+    const navLinks = $('#navLinks');
+    
+    menuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+    
+    // Close menu when clicking on a link
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.nav-inner')) {
+        navLinks.classList.remove('active');
+      }
     });
   }
 
@@ -290,6 +364,9 @@
     $('#year').textContent = new Date().getFullYear();
     const elMail = document.getElementById('emailLink'); if (elMail){ elMail.href = 'mailto:'+CONTACT_EMAIL; elMail.textContent = '✉️ '+CONTACT_EMAIL; }
     const elPhone = document.getElementById('phoneLink'); if (elPhone){ elPhone.href = 'tel:'+PHONE.replace(/\s/g,''); elPhone.textContent = '📞 '+PHONE; }
+
+    // Setup mobile menu
+    setupMobileMenu();
 
     try{ const issues = validateDataShape(REF_SITES); if(issues.length){ console.warn('Data shape issues:', issues); } }catch(err){ console.warn('Validation skipped', err); }
 
