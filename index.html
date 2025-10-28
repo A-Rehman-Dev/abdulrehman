@@ -81,12 +81,17 @@
     .overlay.active{opacity:1;visibility:visible}
     
     /* Logo styles */
-    .logo{height:32px;width:auto;transition:all 0.3s ease}
+    .logo{height:100px;width:auto;transition:all 0.3s ease}
     .logo-dark{display:block}
     .logo-light{display:none}
     .light-mode .logo-dark{display:none}
     .light-mode .logo-light{display:block}
     footer .logo{height:24px}
+    @media (max-width: 1020px){
+      header.nav{padding:0px 10px}
+      .container{padding:0px 10px}
+      footer{padding:0px 10px}
+    }
 
     @media (min-width: 768px) {
         .container{padding:0 24px}
@@ -286,12 +291,7 @@
 
   <footer>
     <div class="container inner">
-      <div style="display:flex;align-items:center;gap:8px">
-        © <span id="year"></span>
-        <!-- Footer Logo -->
-        <img src="logo-dark-mode.png" alt="Abdul-Rehman" class="logo logo-dark">
-        <img src="logo-light-mode.png" alt="Abdul-Rehman" class="logo logo-light">
-      </div>
+      <div>© <span id="year"></span> <span id="footerName">Abdul‑Rehman</span></div>
       <div class="footer-links muted">
         <a href="#Services">Services</a>
         <a href="#Works">Works</a>
@@ -315,7 +315,7 @@
       subtitle: 'Apple Cider Vinegar (FMCG)', 
       year: '2025', 
       tags: ['Marketplace','Content','Performance'],
-      image: 'Bragg.png'
+      image: 'Optimized-Bragg.png'
     },
     { 
       url: 'https://www.sheikhjee.com/', 
@@ -323,7 +323,7 @@
       subtitle: 'Home Furnishings', 
       year: '2025', 
       tags: ['Shopify','CRO','Catalog'],
-      image: 'SheikhJee.png'
+      image: 'Optimized-SheikhJee.png'
     },
     { 
       url: 'https://oakandteak.pk/', 
@@ -331,7 +331,7 @@
       subtitle: 'Furniture', 
       year: '2025', 
       tags: ['Shopify','UX','Performance'],
-      image: 'Oak&Teak.png'
+      image: 'Optimized-Oak&Teak.png'
     },
     { 
       url: 'https://donvalleypharma.com/', 
@@ -339,7 +339,7 @@
       subtitle: 'Pharma Manufacturer', 
       year: '2025', 
       tags: ['Corporate','WordPress','IA'],
-      image: 'Donvalley.png'
+      image: 'Optimized-Donvalley.png'
     },
     { 
       url: 'https://aapkaclinic.org/', 
@@ -347,7 +347,7 @@
       subtitle: 'Healthcare / Non-profit', 
       year: '2025', 
       tags: ['WordPress','SEO','Donations'],
-      image: 'Aapkaclinic.png'
+      image: 'Optimized-Aapkaclinic.png'
     },
     { 
       url: 'https://sairarizwan.pk/', 
@@ -355,7 +355,7 @@
       subtitle: 'Couture & Pret', 
       year: '2025', 
       tags: ['Shopify','Global','CRO'],
-      image: 'SairaRizwan.png'
+      image: 'Optimized-SairaRizwan.png'
     },
     { 
       url: 'https://1ststep.pk/', 
@@ -363,7 +363,7 @@
       subtitle: 'Footwear & Accessories', 
       year: '2025', 
       tags: ['Shopify','CRM','Sale Ops'],
-      image: '1ststep.png'
+      image: 'Optimized-1ststep.png'
     },
     { 
       url: 'https://jafperfumes.com/', 
@@ -371,7 +371,7 @@
       subtitle: 'D2C Fragrance', 
       year: '2025', 
       tags: ['Shopify','UGC Reviews','Bundles'],
-      image: 'JAF.png'
+      image: 'Optimized-JAF.png'
     },
     { 
       url: 'https://mayapret.com/', 
@@ -379,7 +379,7 @@
       subtitle: 'Luxury Pret & Bridals', 
       year: '2025', 
       tags: ['Shopify','Launch','Creator'],
-      image: 'Maya-Pret.png'
+      image: 'Optimized-Maya-Pret.png'
     },
   ];
 
@@ -567,5 +567,6 @@
   </script>
 </body>
 </html>
+
 
 
