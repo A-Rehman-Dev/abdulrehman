@@ -79,6 +79,14 @@
     .drawer-link:hover{color:var(--brand);padding-left:8px}
     .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:25;opacity:0;visibility:hidden;transition:all 0.3s ease}
     .overlay.active{opacity:1;visibility:visible}
+    
+    /* Logo styles */
+    .logo{height:32px;width:auto;transition:all 0.3s ease}
+    .logo-dark{display:block}
+    .logo-light{display:none}
+    .light-mode .logo-dark{display:none}
+    .light-mode .logo-light{display:block}
+    footer .logo{height:24px}
 
     @media (min-width: 768px) {
         .container{padding:0 24px}
@@ -133,7 +141,12 @@
   <header class="nav">
     <div class="container nav-inner">
       <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
-      <div class="brand" id="brandName" style="font-weight:800">Abdul‑Rehman</div>
+      
+      <!-- Logo -->
+      <div class="brand">
+        <img src="logo-dark.svg" alt="Abdul-Rehman" class="logo logo-dark">
+        <img src="logo-light.svg" alt="Abdul-Rehman" class="logo logo-light">
+      </div>
       
       <nav class="nav-links" id="navLinks">
         <a href="#Services" class="nav-link">Services</a>
@@ -273,7 +286,12 @@
 
   <footer>
     <div class="container inner">
-      <div>© <span id="year"></span> <span id="footerName">Abdul‑Rehman</span></div>
+      <div style="display:flex;align-items:center;gap:8px">
+        © <span id="year"></span>
+        <!-- Footer Logo -->
+        <img src="logo-dark.svg" alt="Abdul-Rehman" class="logo logo-dark">
+        <img src="logo-light.svg" alt="Abdul-Rehman" class="logo logo-light">
+      </div>
       <div class="footer-links muted">
         <a href="#Services">Services</a>
         <a href="#Works">Works</a>
@@ -291,15 +309,78 @@
   const LOCATION = 'Lahore, PK';
 
   const REF_SITES = [
-    { url: 'https://bragg.pk/',          title: 'Bragg Pakistan',     subtitle: 'Apple Cider Vinegar (FMCG)', year: '2025', tags: ['Marketplace','Content','Performance'] },
-    { url: 'https://www.sheikhjee.com/', title: 'SheikhJee',          subtitle: 'Home Furnishings',            year: '2025', tags: ['Shopify','CRO','Catalog'] },
-    { url: 'https://oakandteak.pk/',     title: 'Oak & Teak',         subtitle: 'Furniture',                   year: '2025', tags: ['Shopify','UX','Performance'] },
-    { url: 'https://donvalleypharma.com/',title: 'Don Valley Pharma',  subtitle: 'Pharma Manufacturer',         year: '2025', tags: ['Corporate','WordPress','IA'] },
-    { url: 'https://aapkaclinic.org/',   title: 'Aap Ka Clinic',      subtitle: 'Healthcare / Non-profit',     year: '2025', tags: ['WordPress','SEO','Donations'] },
-    { url: 'https://sairarizwan.pk/',    title: 'Saira Rizwan',       subtitle: 'Couture & Pret',              year: '2025', tags: ['Shopify','Global','CRO'] },
-    { url: 'https://1ststep.pk/',        title: '1st Step',           subtitle: 'Footwear & Accessories',      year: '2025', tags: ['Shopify','CRM','Sale Ops'] },
-    { url: 'https://jafperfumes.com/',   title: 'JAF Perfumes',       subtitle: 'D2C Fragrance',               year: '2025', tags: ['Shopify','UGC Reviews','Bundles'] },
-    { url: 'https://mayapret.com/',      title: 'MAYA Pret',          subtitle: 'Luxury Pret & Bridals',       year: '2025', tags: ['Shopify','Launch','Creator'] },
+    { 
+      url: 'https://bragg.pk/', 
+      title: 'Bragg Pakistan', 
+      subtitle: 'Apple Cider Vinegar (FMCG)', 
+      year: '2025', 
+      tags: ['Marketplace','Content','Performance'],
+      image: 'images/bragg-pk.jpg'
+    },
+    { 
+      url: 'https://www.sheikhjee.com/', 
+      title: 'SheikhJee', 
+      subtitle: 'Home Furnishings', 
+      year: '2025', 
+      tags: ['Shopify','CRO','Catalog'],
+      image: 'images/sheikhjee.jpg'
+    },
+    { 
+      url: 'https://oakandteak.pk/', 
+      title: 'Oak & Teak', 
+      subtitle: 'Furniture', 
+      year: '2025', 
+      tags: ['Shopify','UX','Performance'],
+      image: 'images/oak-teak.jpg'
+    },
+    { 
+      url: 'https://donvalleypharma.com/', 
+      title: 'Don Valley Pharma', 
+      subtitle: 'Pharma Manufacturer', 
+      year: '2025', 
+      tags: ['Corporate','WordPress','IA'],
+      image: 'images/don-valley.jpg'
+    },
+    { 
+      url: 'https://aapkaclinic.org/', 
+      title: 'Aap Ka Clinic', 
+      subtitle: 'Healthcare / Non-profit', 
+      year: '2025', 
+      tags: ['WordPress','SEO','Donations'],
+      image: 'images/aapka-clinic.jpg'
+    },
+    { 
+      url: 'https://sairarizwan.pk/', 
+      title: 'Saira Rizwan', 
+      subtitle: 'Couture & Pret', 
+      year: '2025', 
+      tags: ['Shopify','Global','CRO'],
+      image: 'images/saira-rizwan.jpg'
+    },
+    { 
+      url: 'https://1ststep.pk/', 
+      title: '1st Step', 
+      subtitle: 'Footwear & Accessories', 
+      year: '2025', 
+      tags: ['Shopify','CRM','Sale Ops'],
+      image: 'images/1ststep.jpg'
+    },
+    { 
+      url: 'https://jafperfumes.com/', 
+      title: 'JAF Perfumes', 
+      subtitle: 'D2C Fragrance', 
+      year: '2025', 
+      tags: ['Shopify','UGC Reviews','Bundles'],
+      image: 'images/jaf-perfumes.jpg'
+    },
+    { 
+      url: 'https://mayapret.com/', 
+      title: 'MAYA Pret', 
+      subtitle: 'Luxury Pret & Bridals', 
+      year: '2025', 
+      tags: ['Shopify','Launch','Creator'],
+      image: 'images/maya-pret.jpg'
+    },
   ];
 
   const CORS_PROXY = '';
@@ -329,7 +410,14 @@
       a.style.transitionDelay = ((idx%6)*50)+'ms';
       const imgWrap = el('div', { className:'thumb' });
       const img = el('img', { alt:p.title||'Thumbnail' });
-      if(p.image){ img.src = p.image; img.loading='lazy'; imgWrap.appendChild(img); } else { imgWrap.textContent='Thumbnail'; }
+      if(p.image){ 
+        img.src = p.image; 
+        img.loading='lazy'; 
+        imgWrap.appendChild(img); 
+      } else { 
+        // Fallback if no image is provided
+        imgWrap.textContent='Thumbnail'; 
+      }
       const h3 = el('h3', { className:'title', textContent:p.title||'Untitled' });
       const sub = el('div', { className:'subtitle', textContent:p.subtitle||'' });
       const year = p.year ? el('span', { className:'tag', textContent:p.year }) : null;
@@ -450,8 +538,6 @@
   function triggerReveal(){ document.querySelectorAll('.reveal:not(.in)').forEach(el=>IO.observe(el)); }
 
   (async function main(){
-    $('#brandName').textContent = YOUR_NAME;
-    $('#footerName').textContent = YOUR_NAME;
     document.title = `Portfolio — ${YOUR_NAME}`;
     $('#year').textContent = new Date().getFullYear();
     const elMail = document.getElementById('emailLink'); if (elMail){ elMail.href = 'mailto:'+CONTACT_EMAIL; elMail.textContent = '✉️ '+CONTACT_EMAIL; }
