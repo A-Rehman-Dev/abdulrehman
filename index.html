@@ -6,6 +6,8 @@
   <title>Abdul Rehman | Shopify, WordPress & WooCommerce Developer</title>
   <meta name="description" content="Abdul Rehman is a Shopify, WordPress and WooCommerce developer based in Lahore, Pakistan. Ecommerce websites, custom sections, responsive fixes, integrations, maintenance and performance cleanup." />
   <meta name="theme-color" content="#ECE7DD" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -187,21 +189,6 @@
       pointer-events: none;
     }
 
-    .hero:after {
-      content: "";
-      position: absolute;
-      right: clamp(18px, 5vw, 80px);
-      top: clamp(110px, 17vw, 190px);
-      width: clamp(180px, 28vw, 420px);
-      aspect-ratio: 1;
-      border-radius: 50%;
-      background:
-        linear-gradient(135deg, rgba(36,35,31,.90), rgba(125,132,103,.72)),
-        radial-gradient(circle, rgba(255,255,255,.25), transparent 55%);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.18), 0 30px 90px rgba(36,35,31,.20);
-      opacity: .9;
-    }
-
     .heroInner {
       position: relative;
       z-index: 2;
@@ -209,8 +196,8 @@
       margin-inline: auto;
       padding: 0 0 clamp(36px, 6vw, 74px);
       display: grid;
-      grid-template-columns: minmax(320px, 790px) 1fr;
-      gap: 24px;
+      grid-template-columns: minmax(320px, 760px) minmax(220px, 420px);
+      gap: clamp(24px, 5vw, 70px);
       align-items: end;
     }
 
@@ -219,10 +206,35 @@
       color: var(--ink);
     }
 
+    .heroVisual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      align-self: center;
+      padding-bottom: clamp(10px, 3vw, 30px);
+    }
+
+    .heroCircle {
+      width: min(100%, clamp(210px, 30vw, 420px));
+      aspect-ratio: 1;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.32);
+      background: linear-gradient(135deg, rgba(36,35,31,.90), rgba(125,132,103,.72));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.18), 0 30px 90px rgba(36,35,31,.22);
+    }
+
+    .heroCircle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
     .heroPanel h1 {
-      font-size: clamp(50px, 8.2vw, 118px);
-      line-height: .88;
-      letter-spacing: -.09em;
+      font-size: clamp(48px, 7vw, 92px);
+      line-height: .94;
+      letter-spacing: -.035em;
       font-weight: 900;
       max-width: 920px;
     }
@@ -663,11 +675,14 @@
         width: min(100% - 32px, 760px);
       }
 
-      .hero:after {
-        opacity: .26;
-        right: -110px;
-        top: 120px;
-        width: 360px;
+      .heroVisual {
+        justify-content: flex-start;
+        align-self: start;
+        padding-bottom: 0;
+      }
+
+      .heroCircle {
+        width: clamp(180px, 38vw, 280px);
       }
 
       .workItem {
@@ -777,7 +792,17 @@
       }
 
       .heroPanel h1 {
-        font-size: clamp(42px, 14vw, 66px);
+        font-size: clamp(40px, 12vw, 58px);
+      }
+
+      .heroVisual {
+        justify-content: center;
+        order: -1;
+        padding-top: 74px;
+      }
+
+      .heroCircle {
+        width: clamp(150px, 48vw, 230px);
       }
 
       .heroPills,
@@ -886,6 +911,11 @@
               <span class="pill"><span class="statusDot"></span>Available for website projects</span>
               <span class="pill">Lahore, Pakistan</span>
               <span class="pill">Remote friendly</span>
+            </div>
+          </div>
+          <div class="heroVisual reveal">
+            <div class="heroCircle">
+              <img src="hero-circle.jpg" alt="Abdul Rehman portfolio visual">
             </div>
           </div>
         </div>
