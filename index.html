@@ -5,1227 +5,949 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Abdul Rehman | Shopify, WordPress & WooCommerce Developer</title>
   <meta name="description" content="Abdul Rehman is a Shopify, WordPress and WooCommerce developer based in Lahore, Pakistan. Ecommerce websites, custom sections, responsive fixes, integrations, maintenance and performance cleanup." />
-  <meta name="theme-color" content="#ECE7DD" />
+  <meta name="theme-color" content="#101114" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
-  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
 
   <style>
     :root {
-      --bg: #ECE7DD;
-      --paper: #FAF7F0;
-      --cream: #FFFDF7;
-      --ink: #161512;
-      --muted: #706A5F;
-      --soft: #DFD6C7;
-      --line: rgba(22,21,18,.13);
-      --lineStrong: rgba(22,21,18,.24);
-      --deep: #24231F;
-      --olive: #7D8467;
-      --clay: #B88B69;
-      --sand: #D6C4A8;
-      --radius: 30px;
-      --max: 1280px;
+      --bg: #EFF1EC;
+      --surface: #F8F9F5;
+      --surface-strong: #101114;
+      --panel-fg: #F4F5F1;
+      --text: #101114;
+      --muted: #63665F;
+      --line: rgba(16,17,20,.14);
+      --lineStrong: rgba(16,17,20,.28);
+      --cobalt: #3049F0;
+      --cobalt-deep: #2338C4;
+      --amber: #F5A623;
+      --radius: 26px;
+      --max: 1240px;
+      --ease: cubic-bezier(.16,1,.3,1);
+      --ease-soft: cubic-bezier(.22,.9,.32,1);
+      --f-display: 'Space Grotesk', sans-serif;
+      --f-body: 'Inter', system-ui, sans-serif;
+      --f-mono: 'IBM Plex Mono', monospace;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    html.dark-theme {
+      --bg: #0B0C0E;
+      --surface: #18191D;
+      --surface-strong: #1E2027;
+      --text: #EFF1EC;
+      --muted: #9A9C96;
+      --line: rgba(255,255,255,.12);
+      --lineStrong: rgba(255,255,255,.22);
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
     body {
       min-height: 100vh;
-      background:
-        radial-gradient(circle at top left, rgba(184,139,105,.18), transparent 38rem),
-        radial-gradient(circle at 85% 8%, rgba(125,132,103,.16), transparent 32rem),
-        linear-gradient(180deg, var(--bg), #E5DED1 54%, #F1EADF);
-      color: var(--ink);
-      font-family: Inter, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--f-body);
       font-size: 16px;
       line-height: 1.55;
       overflow-x: hidden;
+      transition: background .4s var(--ease), color .4s var(--ease);
     }
 
-    body.menu-open {
-      overflow: hidden;
-    }
+    body.no-scroll { overflow: hidden; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; width: 100%; max-width: 100%; }
+    button { font: inherit; background: none; border: none; cursor: pointer; color: inherit; }
+    ul { list-style: none; }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    .container { width: min(var(--max), calc(100% - 40px)); margin-inline: auto; }
+    .mono { font-family: var(--f-mono); }
 
-    img {
-      display: block;
-      width: 100%;
-      max-width: 100%;
-    }
+    .progress { position: fixed; top: 0; left: 0; height: 2px; width: 0%; z-index: 300; background: var(--cobalt); transition: width .08s linear; }
 
-    button {
-      font: inherit;
+    .cursorDot {
+      position: fixed; top: 0; left: 0; width: 10px; height: 10px; border-radius: 50%;
+      background: var(--cobalt); pointer-events: none; z-index: 320; transform: translate(-50%,-50%);
+      opacity: 0; transition: opacity .25s ease, width .25s var(--ease-soft), height .25s var(--ease-soft), background .25s ease;
     }
+    .cursorDot.show { opacity: .9; }
+    .cursorDot.big { width: 38px; height: 38px; background: rgba(48,73,240,.14); border: 1.5px solid var(--cobalt); }
+    @media (hover: none) { .cursorDot { display: none; } }
 
-    .container {
-      width: min(var(--max), calc(100% - 40px));
-      margin-inline: auto;
-    }
-
+    /* ---------- NAV ---------- */
     .nav {
-      position: fixed;
-      top: 18px;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      pointer-events: none;
+      position: fixed; top: 16px; left: 0; right: 0; z-index: 150; display: flex; justify-content: center;
+      opacity: 0; transform: translateY(-14px); transition: opacity .7s var(--ease) .1s, transform .7s var(--ease) .1s;
     }
+    .nav.in { opacity: 1; transform: translateY(0); }
 
     .navInner {
-      width: min(840px, calc(100% - 32px));
-      min-height: 64px;
-      margin-inline: auto;
-      padding: 8px 8px 8px 14px;
-      border: 1px solid rgba(255,255,255,.42);
-      border-radius: 999px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      background: rgba(250,247,240,.78);
-      backdrop-filter: blur(20px) saturate(140%);
-      box-shadow: 0 24px 80px rgba(54,46,34,.15);
-      pointer-events: auto;
+      display: flex; align-items: center; gap: 6px; padding: 8px; border-radius: 999px;
+      border: 1px solid rgba(16,17,20,.14); background: rgba(248,249,245,.86);
+      backdrop-filter: blur(20px) saturate(140%); box-shadow: 0 20px 60px rgba(16,17,20,.12);
+      max-width: calc(100vw - 24px);
     }
 
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      min-width: max-content;
-    }
+    .navBrand { display: inline-flex; align-items: center; gap: 8px; padding: 0 10px 0 6px; }
+    .navBrand img { height: 30px; width: auto; }
+    .navBrand span { font-family: var(--f-display); font-weight: 600; font-size: 15px; color: #101114; white-space: nowrap; }
 
-    .brandLogo {
-      width: auto;
-      height: 42px;
-      object-fit: contain;
+    .navIcons { display: flex; align-items: center; gap: 2px; }
+    .navIcon {
+      position: relative; width: 42px; height: 42px; border-radius: 999px; display: grid; place-items: center;
+      color: #63665F; font-size: 19px; transition: color .25s ease, background .25s ease;
     }
+    .navIcon:hover, .navIcon.active { color: #101114; background: rgba(16,17,20,.06); }
+    .navIcon.active { color: var(--cobalt-deep); }
+    .navIcon .tip {
+      position: absolute; top: calc(100% + 10px); left: 50%; transform: translate(-50%, -6px);
+      padding: 5px 9px; border-radius: 8px; background: #101114; color: #F4F5F1; font-size: 11px;
+      font-family: var(--f-mono); white-space: nowrap; opacity: 0; pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    .navIcon:hover .tip { opacity: 1; transform: translate(-50%, 0); }
 
-    .navLinks {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--muted);
-      font-size: 14px;
-      font-weight: 750;
-    }
+    .navDivider { width: 1px; height: 22px; background: rgba(16,17,20,.14); margin: 0 4px; }
 
-    .navLinks a {
-      padding: 10px 12px;
-      border-radius: 999px;
-      transition: background .2s ease, color .2s ease;
+    .themeToggle {
+      width: 42px; height: 42px; border-radius: 999px; display: grid; place-items: center;
+      color: #101114; font-size: 18px; transition: background .25s ease, transform .3s var(--ease-soft);
     }
-
-    .navLinks a:hover {
-      color: var(--ink);
-      background: rgba(22,21,18,.07);
-    }
+    .themeToggle:hover { background: rgba(16,17,20,.06); }
+    .themeToggle i { transition: transform .4s var(--ease-soft); display: inline-block; }
+    .themeToggle:active i { transform: rotate(50deg); }
 
     .navCta {
-      min-height: 42px;
-      padding: 11px 17px;
-      border-radius: 999px;
-      background: var(--deep);
-      color: var(--paper);
-      font-size: 14px;
-      font-weight: 900;
-      white-space: nowrap;
+      margin-left: 4px; min-height: 42px; padding: 0 16px; border-radius: 999px; background: #101114;
+      color: #F4F5F1; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;
+      white-space: nowrap; transition: transform .2s var(--ease-soft), background .2s ease;
+    }
+    .navCta:hover { background: var(--cobalt-deep); }
+
+    @media (max-width: 720px) {
+      .navBrand span, .navCta span.label { display: none; }
+      .navCta { padding: 0 12px; }
     }
 
-    .menuBtn {
-      display: none;
-      width: 42px;
-      height: 42px;
-      border: 0;
-      border-radius: 999px;
-      background: var(--deep);
-      color: var(--paper);
-      cursor: pointer;
-    }
-
-    .heroWrap {
-      width: 100%;
-      min-height: 100vh;
-      padding: 18px;
-      display: grid;
-    }
-
+    /* ---------- HERO ---------- */
+    .heroWrap { width: 100%; min-height: 100vh; padding: 18px; display: grid; }
     .hero {
-      position: relative;
-      min-height: calc(100vh - 36px);
-      border-radius: 38px;
-      overflow: hidden;
+      position: relative; min-height: calc(100vh - 36px); border-radius: 34px; overflow: hidden;
       background:
-        radial-gradient(circle at 18% 20%, rgba(255,253,247,.92), transparent 18rem),
-        radial-gradient(circle at 78% 12%, rgba(184,139,105,.36), transparent 28rem),
-        radial-gradient(circle at 78% 74%, rgba(125,132,103,.32), transparent 30rem),
-        linear-gradient(135deg, #F8F2E8 0%, #E8DCCB 42%, #B8A986 100%);
-      box-shadow: 0 30px 100px rgba(55,45,30,.20);
-      display: grid;
-      align-items: end;
+        radial-gradient(circle at 82% 8%, rgba(48,73,240,.28), transparent 34rem),
+        radial-gradient(circle at 10% 85%, rgba(245,166,35,.14), transparent 30rem),
+        linear-gradient(160deg, #101114 0%, #17181C 55%, #1E2027 100%);
+      box-shadow: 0 30px 100px rgba(16,17,20,.28); display: grid; align-content: center;
     }
-
-    .hero:before {
-      content: "";
-      position: absolute;
-      inset: 18px;
-      border: 1px solid rgba(22,21,18,.10);
-      border-radius: 28px;
-      pointer-events: none;
+    .hero:before { content: ""; position: absolute; inset: 16px; border: 1px solid rgba(255,255,255,.08); border-radius: 24px; pointer-events: none; }
+    .scanline {
+      position: absolute; top: 0; bottom: 0; width: 40%; z-index: 1; pointer-events: none;
+      background: linear-gradient(90deg, transparent, rgba(48,73,240,.22), rgba(245,166,35,.10), transparent);
+      transform: translateX(-140%); opacity: 0;
     }
+    .scanline.run { animation: sweep 1.6s var(--ease) .5s forwards; }
+    @keyframes sweep { 0%{transform:translateX(-140%);opacity:0;} 15%{opacity:1;} 85%{opacity:1;} 100%{transform:translateX(240%);opacity:0;} }
 
     .heroInner {
-      position: relative;
-      z-index: 2;
-      width: min(var(--max), calc(100% - 48px));
-      margin-inline: auto;
-      padding: 0 0 clamp(36px, 6vw, 74px);
-      display: grid;
-      grid-template-columns: minmax(320px, 760px) minmax(220px, 420px);
-      gap: clamp(24px, 5vw, 70px);
-      align-items: end;
+      position: relative; z-index: 2; width: min(var(--max), calc(100% - 48px)); margin-inline: auto;
+      padding: clamp(40px, 8vw, 90px) 0; display: grid; grid-template-columns: minmax(320px,1fr) minmax(240px,360px);
+      gap: clamp(30px, 5vw, 64px); align-items: center;
     }
 
-    .heroPanel {
-      width: 100%;
-      color: var(--ink);
+    .heroGreeting {
+      display: inline-flex; align-items: center; gap: 8px; font-family: var(--f-mono); font-size: 13px;
+      color: rgba(239,241,236,.62); opacity: 0; transform: translateY(10px);
+      transition: opacity .7s var(--ease) .05s, transform .7s var(--ease) .05s;
     }
-
-    .heroVisual {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      align-self: center;
-      padding-bottom: clamp(10px, 3vw, 30px);
-    }
-
-    .heroCircle {
-      width: min(100%, clamp(210px, 30vw, 420px));
-      aspect-ratio: 1;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,.32);
-      background: linear-gradient(135deg, rgba(36,35,31,.90), rgba(125,132,103,.72));
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.18), 0 30px 90px rgba(36,35,31,.22);
-    }
-
-    .heroCircle img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-    }
+    .heroGreeting i { width: 6px; height: 6px; border-radius: 50%; background: #4C8B3A; display:inline-block; animation: pulse 2.2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{box-shadow:0 0 0 4px rgba(76,139,58,.16);} 50%{box-shadow:0 0 0 7px rgba(76,139,58,.05);} }
+    .heroPanel.in .heroGreeting { opacity: 1; transform: translateY(0); }
 
     .heroPanel h1 {
-      font-size: clamp(48px, 7vw, 92px);
-      line-height: .94;
-      letter-spacing: -.035em;
-      font-weight: 900;
-      max-width: 920px;
+      margin-top: 14px; font-family: var(--f-display); font-size: clamp(44px, 6.6vw, 84px); line-height: .98;
+      letter-spacing: -.03em; font-weight: 700; color: #F4F5F1; max-width: 720px;
     }
+    .heroPanel h1 .word { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .1em; margin-bottom: -.1em; }
+    .heroPanel h1 .word span { display: inline-block; transform: translateY(112%); transition: transform .9s var(--ease); }
+    .heroPanel.in h1 .word:nth-child(1) span { transition-delay: .14s; }
+    .heroPanel.in h1 .word:nth-child(2) span { transition-delay: .22s; }
+    .heroPanel.in h1 .word span { transform: translateY(0); }
+
+    .heroRole {
+      margin-top: 10px; font-family: var(--f-mono); font-size: clamp(14px, 1.6vw, 17px); color: var(--amber);
+      opacity: 0; transform: translateY(10px); transition: opacity .7s var(--ease) .32s, transform .7s var(--ease) .32s;
+    }
+    .heroPanel.in .heroRole { opacity: 1; transform: translateY(0); }
 
     .heroPanel p {
-      max-width: 760px;
-      margin-top: 24px;
-      color: var(--muted);
-      font-size: clamp(18px, 2vw, 25px);
-      line-height: 1.42;
-      font-weight: 650;
-      letter-spacing: -.035em;
+      max-width: 520px; margin-top: 16px; color: rgba(239,241,236,.66); font-size: clamp(16px, 1.6vw, 18px);
+      line-height: 1.55; font-weight: 500; opacity: 0; transform: translateY(14px);
+      transition: opacity .8s var(--ease) .42s, transform .8s var(--ease) .42s;
     }
+    .heroPanel.in p { opacity: 1; transform: translateY(0); }
 
-    .heroPills {
-      margin-top: 30px;
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
+    .heroButtons {
+      margin-top: 30px; display: flex; flex-wrap: wrap; gap: 12px; opacity: 0; transform: translateY(14px);
+      transition: opacity .8s var(--ease) .54s, transform .8s var(--ease) .54s;
     }
+    .heroPanel.in .heroButtons { opacity: 1; transform: translateY(0); }
 
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      min-height: 42px;
-      padding: 9px 14px;
-      border: 1px solid rgba(22,21,18,.15);
-      border-radius: 999px;
-      background: rgba(255,253,247,.58);
-      color: var(--ink);
-      backdrop-filter: blur(14px);
-      font-size: 13px;
-      font-weight: 850;
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px; min-height: 52px; padding: 0 22px; border-radius: 999px;
+      font-weight: 700; font-size: 14.5px; letter-spacing: -.01em; transition: transform .2s var(--ease-soft), background .2s ease, border-color .2s ease;
+      will-change: transform;
     }
+    .btn--solid { background: var(--amber); color: #101114; }
+    .btn--solid:hover { background: #FFC152; }
+    .btn--ghost { background: transparent; color: #F4F5F1; border: 1.5px solid rgba(255,255,255,.28); }
+    .btn--ghost:hover { background: rgba(255,255,255,.08); }
+    .btn--dark { background: #101114; color: #F4F5F1; }
+    .btn--dark:hover { background: var(--cobalt-deep); }
 
-    .statusDot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #6B8E5D;
-      box-shadow: 0 0 0 6px rgba(107,142,93,.16);
+    .heroPortraitWrap { display: flex; justify-content: center; perspective: 1000px; }
+    .heroPortrait {
+      position: relative; width: min(100%, clamp(210px, 22vw, 300px)); aspect-ratio: 4/5; border-radius: 22px;
+      overflow: hidden; border: 1px solid rgba(255,255,255,.14); box-shadow: 0 30px 80px rgba(0,0,0,.35);
+      transform: rotateY(0) rotateX(0); opacity: 0; transition: opacity .9s var(--ease) .3s, transform .5s var(--ease-soft);
+      will-change: transform;
     }
-
-    .section {
-      padding: clamp(70px, 9vw, 120px) 0;
+    .heroPanel.in .heroPortrait { opacity: 1; }
+    .heroPortrait img { width: 100%; height: 100%; object-fit: cover; }
+    .heroPortraitTag {
+      position: absolute; left: 12px; bottom: 12px; display: inline-flex; align-items: center; gap: 7px;
+      padding: 7px 11px; border-radius: 999px; background: rgba(16,17,20,.68); backdrop-filter: blur(8px);
+      font-family: var(--f-mono); font-size: 11px; color: #F4F5F1; border: 1px solid rgba(255,255,255,.14);
     }
+    .heroPortraitTag i { width: 6px; height: 6px; border-radius: 50%; background: #4C8B3A; display:inline-block; }
 
-    .sectionHead {
-      display: grid;
-      grid-template-columns: .82fr 1.18fr;
-      gap: 30px;
-      align-items: end;
-      margin-bottom: 34px;
+    .scrollHint {
+      position: absolute; bottom: 34px; left: 50%; transform: translateX(-50%); z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 8px; color: rgba(239,241,236,.5);
+      font-family: var(--f-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
     }
+    .scrollHint i { font-size: 20px; animation: bob 1.8s ease-in-out infinite; }
+    @keyframes bob { 0%,100%{transform:translateY(0);} 50%{transform:translateY(6px);} }
 
+    /* ---------- MARQUEE ---------- */
+    .marqueeBand { overflow: hidden; background: var(--surface-strong); border-block: 1px solid rgba(255,255,255,.08); padding: 15px 0; }
+    .marqueeTrack { display: flex; width: max-content; animation: scroll 26s linear infinite; }
+    .marqueeTrack:hover { animation-play-state: paused; }
+    @keyframes scroll { from{transform:translateX(0);} to{transform:translateX(-50%);} }
+    .marqueeItem { display: inline-flex; align-items: center; gap: 14px; padding: 0 20px; font-family: var(--f-mono); font-size: 13.5px; color: rgba(244,245,241,.7); white-space: nowrap; }
+    .marqueeItem b { color: var(--amber); font-weight: 500; }
+    .marqueeItem .dot { color: rgba(255,255,255,.22); }
+
+    /* ---------- SECTIONS ---------- */
+    .section { padding: clamp(70px, 9vw, 120px) 0; }
+    .sectionHead { text-align: center; max-width: 620px; margin: 0 auto 46px; }
     .kicker {
-      color: var(--muted);
-      font-size: 14px;
-      font-weight: 900;
-      letter-spacing: -.02em;
+      display: inline-flex; align-items: center; gap: 8px; font-family: var(--f-mono); color: var(--muted);
+      font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .1em; justify-content: center;
     }
-
+    .kicker:before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--cobalt); }
     .sectionTitle {
-      font-size: clamp(42px, 7.8vw, 100px);
-      line-height: .9;
-      letter-spacing: -.085em;
-      font-weight: 900;
+      margin-top: 10px; font-family: var(--f-display); font-size: clamp(32px, 5vw, 52px); line-height: 1.04;
+      letter-spacing: -.02em; font-weight: 600;
     }
+    .sectionCopy { margin-top: 12px; color: var(--muted); font-size: 16px; font-weight: 500; }
 
-    .sectionCopy {
-      max-width: 700px;
-      color: var(--muted);
-      font-size: clamp(17px, 2vw, 22px);
-      line-height: 1.5;
-      letter-spacing: -.035em;
-      font-weight: 650;
+    /* ---------- ABOUT ---------- */
+    .aboutGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 40px; }
+    .statBox {
+      border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 26px;
+      text-align: center; transition: transform .4s var(--ease), border-color .3s ease;
     }
+    .statBox:hover { transform: translateY(-4px); border-color: var(--lineStrong); }
+    .statBox i { font-size: 26px; color: var(--cobalt); }
+    .statBox strong { display: block; margin-top: 12px; font-family: var(--f-display); font-size: clamp(26px, 3.4vw, 36px); letter-spacing: -.01em; }
+    .statBox span { display: block; margin-top: 4px; color: var(--muted); font-size: 13.5px; font-weight: 600; }
 
-    .workList {
-      display: grid;
-      gap: 14px;
+    .aboutText { max-width: 720px; margin: 0 auto; text-align: center; }
+    .aboutText p { color: var(--muted); font-size: 17px; line-height: 1.7; font-weight: 500; }
+    .aboutText .btn { margin-top: 24px; }
+
+    /* ---------- SKILLS ---------- */
+    .skillsGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .skillCard { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: clamp(26px, 4vw, 36px); }
+    .skillCard h3 { font-family: var(--f-display); font-size: 22px; font-weight: 600; letter-spacing: -.01em; margin-bottom: 20px; }
+    .skillRow {
+      display: flex; align-items: center; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--line);
+      font-weight: 600; font-size: 15px; transition: padding-left .3s var(--ease-soft), color .3s ease;
     }
+    .skillRow:last-child { border-bottom: 0; }
+    .skillRow i { color: var(--cobalt); font-size: 18px; flex-shrink: 0; }
+    .skillRow:hover { padding-left: 6px; color: var(--cobalt-deep); }
 
-    .workItem {
-      min-height: 142px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: rgba(255,253,247,.76);
-      display: grid;
-      grid-template-columns: 184px 1fr auto;
-      align-items: center;
-      gap: 28px;
-      padding: 16px;
-      overflow: hidden;
-      box-shadow: 0 18px 55px rgba(75,61,40,.06);
-      transition: transform .25s ease, border-color .25s ease, background .25s ease;
+    /* ---------- SERVICES ---------- */
+    .servicesGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .serviceCard {
+      position: relative; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface);
+      padding: clamp(26px, 4vw, 34px); min-height: 200px; display: flex; flex-direction: column; justify-content: space-between;
+      transition: transform .4s var(--ease), border-color .3s ease, box-shadow .4s var(--ease);
     }
-
-    .workItem:hover {
-      transform: translateY(-4px);
-      border-color: var(--lineStrong);
-      background: var(--cream);
+    .serviceCard:hover { transform: translateY(-4px); border-color: var(--lineStrong); box-shadow: 0 24px 60px rgba(16,17,20,.08); }
+    .serviceCard .svcNum { font-family: var(--f-mono); font-size: 12px; color: var(--cobalt); }
+    .serviceCard h3 { margin-top: 14px; font-family: var(--f-display); font-size: clamp(22px, 2.8vw, 28px); font-weight: 600; line-height: 1.15; letter-spacing: -.01em; }
+    .svcMore {
+      margin-top: 20px; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700;
+      color: var(--cobalt-deep);
     }
+    .svcMore i { transition: transform .3s var(--ease-soft); }
+    .serviceCard:hover .svcMore i { transform: translateX(4px); }
 
-    .workThumb {
-      aspect-ratio: 16 / 10;
-      border-radius: 22px;
-      overflow: hidden;
-      background: var(--soft);
-      border: 1px solid var(--line);
+    .modalOverlay {
+      position: fixed; inset: 0; z-index: 400; background: rgba(16,17,20,.55); backdrop-filter: blur(6px);
+      display: grid; place-items: center; padding: 20px; opacity: 0; visibility: hidden;
+      transition: opacity .3s ease, visibility .3s ease;
     }
-
-    .workThumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform .4s ease;
+    .modalOverlay.active { opacity: 1; visibility: visible; }
+    .modalCard {
+      width: min(560px, 100%); max-height: 84vh; overflow-y: auto; border-radius: 28px; background: var(--surface);
+      color: var(--text); padding: clamp(28px, 5vw, 42px); position: relative; transform: translateY(24px) scale(.96);
+      opacity: 0; transition: transform .35s var(--ease), opacity .35s var(--ease);
     }
-
-    .workItem:hover .workThumb img {
-      transform: scale(1.05);
+    .modalOverlay.active .modalCard { transform: translateY(0) scale(1); opacity: 1; }
+    .modalClose {
+      position: absolute; top: 16px; right: 16px; width: 38px; height: 38px; border-radius: 50%;
+      display: grid; place-items: center; border: 1px solid var(--line); font-size: 20px; color: var(--muted);
+      transition: background .25s ease, color .25s ease, transform .25s ease;
     }
+    .modalClose:hover { background: var(--text); color: var(--bg); transform: rotate(90deg); }
+    .modalCard h3 { font-family: var(--f-display); font-size: clamp(24px, 3.4vw, 32px); font-weight: 600; letter-spacing: -.01em; padding-right: 40px; }
+    .modalCard p { margin-top: 14px; color: var(--muted); font-size: 15.5px; line-height: 1.6; font-weight: 500; }
+    .modalList { margin-top: 20px; display: grid; gap: 12px; }
+    .modalList li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; font-weight: 500; }
+    .modalList i { color: var(--cobalt); font-size: 18px; margin-top: 1px; flex-shrink: 0; }
 
-    .workMain h3 {
-      font-size: clamp(26px, 4vw, 52px);
-      line-height: .95;
-      letter-spacing: -.075em;
-      font-weight: 900;
+    /* ---------- WORK ---------- */
+    .workFilters { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 34px; }
+    .filterBtn {
+      padding: 9px 16px; border-radius: 999px; border: 1px solid var(--line); font-family: var(--f-mono);
+      font-size: 12.5px; color: var(--muted); transition: background .25s ease, color .25s ease, border-color .25s ease;
     }
+    .filterBtn:hover { border-color: var(--lineStrong); color: var(--text); }
+    .filterBtn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
 
-    .workMain p {
-      max-width: 760px;
-      margin-top: 12px;
-      color: var(--muted);
-      font-size: 16px;
-      font-weight: 650;
+    .workGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .workCard {
+      border: 1px solid var(--line); border-radius: 22px; overflow: hidden; background: var(--surface);
+      transition: transform .5s var(--ease), opacity .35s ease, box-shadow .4s var(--ease);
     }
-
-    .workTags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 16px;
+    .workCard:hover { transform: translateY(-5px); box-shadow: 0 24px 60px rgba(16,17,20,.10); }
+    .workCard.hide { opacity: 0; transform: scale(.92); pointer-events: none; position: absolute; visibility: hidden; }
+    .workThumb { aspect-ratio: 4/3; overflow: hidden; background: var(--bg); }
+    .workThumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease); }
+    .workCard:hover .workThumb img { transform: scale(1.08); }
+    .workBody { padding: 20px; }
+    .workBody h3 { font-family: var(--f-display); font-size: 19px; font-weight: 600; letter-spacing: -.01em; }
+    .workBody p { margin-top: 6px; color: var(--muted); font-size: 13.5px; line-height: 1.5; font-weight: 500; }
+    .workLink {
+      margin-top: 14px; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700;
+      color: var(--cobalt-deep);
     }
+    .workLink i { transition: transform .3s var(--ease-soft); }
+    .workCard:hover .workLink i { transform: translate(3px,-3px); }
 
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      min-height: 28px;
-      padding: 5px 10px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 850;
-      background: rgba(22,21,18,.03);
+    /* ---------- CONTACT ---------- */
+    .contactGrid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 18px; }
+    .contactCards { display: grid; gap: 14px; align-content: start; }
+    .contactCard {
+      border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 24px;
+      transition: transform .35s var(--ease), border-color .3s ease;
     }
+    .contactCard:hover { transform: translateY(-3px); border-color: var(--lineStrong); }
+    .contactCard i { font-size: 24px; color: var(--cobalt); }
+    .contactCard h3 { margin-top: 12px; font-family: var(--f-display); font-size: 18px; font-weight: 600; }
+    .contactCard span { display: block; margin-top: 3px; color: var(--muted); font-size: 13.5px; }
+    .contactCard a.ccLink { margin-top: 14px; display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; font-weight: 700; color: var(--cobalt-deep); }
 
-    .arrow {
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      background: var(--deep);
-      color: var(--paper);
-      display: grid;
-      place-items: center;
-      font-size: 22px;
-      font-weight: 900;
+    .formCard { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: clamp(24px, 4vw, 36px); }
+    .formCard h3 { font-family: var(--f-display); font-size: 20px; font-weight: 600; margin-bottom: 20px; }
+    .formGrid { display: grid; gap: 16px; }
+    .formRow { display: flex; flex-direction: column; gap: 8px; }
+    .formRow label { font-family: var(--f-mono); font-size: 11.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+    .formRow input, .formRow textarea {
+      border: 1px solid var(--line); border-radius: 14px; padding: 13px 15px; font: inherit; font-size: 14.5px;
+      background: var(--bg); color: var(--text); transition: border-color .25s ease, box-shadow .25s ease;
+      resize: vertical;
     }
-
-    .splitGrid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
+    .formRow input:focus, .formRow textarea:focus { outline: none; border-color: var(--cobalt); box-shadow: 0 0 0 3px rgba(48,73,240,.14); }
+    .formSubmit {
+      margin-top: 4px; min-height: 50px; border-radius: 999px; background: var(--text); color: var(--bg);
+      font-weight: 700; font-size: 14.5px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      transition: transform .2s var(--ease-soft), background .2s ease;
     }
+    .formSubmit:hover { background: var(--cobalt-deep); color: #fff; }
 
-    .card {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: rgba(255,253,247,.78);
-      padding: clamp(24px, 4vw, 38px);
-      box-shadow: 0 18px 55px rgba(75,61,40,.06);
-    }
-
-    .card.alt {
+    /* ---------- FOOTER ---------- */
+    .ctaBand {
+      border-radius: 34px; padding: clamp(40px, 7vw, 70px); text-align: center;
       background:
-        linear-gradient(135deg, rgba(125,132,103,.13), rgba(184,139,105,.09)),
-        rgba(255,253,247,.82);
+        radial-gradient(circle at 15% 20%, rgba(48,73,240,.28), transparent 30rem),
+        radial-gradient(circle at 85% 80%, rgba(245,166,35,.16), transparent 28rem),
+        linear-gradient(160deg, #101114 0%, #1B1C20 60%, #24262C 100%);
+      color: #F4F5F1;
     }
+    .ctaBand p.contactMono { font-family: var(--f-mono); font-size: 12px; color: rgba(244,245,241,.6); text-transform: uppercase; letter-spacing: .1em; }
+    .ctaBand p.contactMono:before { content: "// "; color: var(--amber); }
+    .ctaBand h2 { margin-top: 14px; font-family: var(--f-display); font-size: clamp(34px, 6vw, 60px); line-height: 1.02; letter-spacing: -.02em; font-weight: 600; }
+    .ctaBand .heroButtons { justify-content: center; opacity: 1; transform: none; margin-top: 28px; }
 
-    .card h3 {
-      font-size: clamp(28px, 4vw, 52px);
-      line-height: .95;
-      letter-spacing: -.075em;
-      font-weight: 900;
-    }
+    .footer { padding: 34px 0; border-top: 1px solid var(--line); }
+    .footerInner { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+    .footerBrand { font-family: var(--f-display); font-weight: 600; font-size: 16px; }
+    .footerLinks { display: flex; flex-wrap: wrap; gap: 20px; font-size: 14px; font-weight: 600; color: var(--muted); }
+    .footerLinks a:hover { color: var(--text); }
+    .footerCopy { font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
 
-    .card p,
-    .card li {
-      color: var(--muted);
-      font-size: 17px;
-      font-weight: 650;
-      line-height: 1.6;
-    }
-
-    .card p {
-      margin-top: 18px;
-    }
-
-    .card ul {
-      list-style: none;
-      margin-top: 20px;
-      display: grid;
-      gap: 14px;
-    }
-
-    .card li {
-      padding-bottom: 14px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .card li:last-child {
-      border-bottom: 0;
-      padding-bottom: 0;
-    }
-
-    .stackGrid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-    }
-
-    .stackBox {
-      min-height: 180px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--deep);
-      color: var(--paper);
-      padding: 25px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .stackBox strong {
-      font-size: clamp(30px, 5vw, 66px);
-      line-height: .86;
-      letter-spacing: -.08em;
-      font-weight: 900;
-    }
-
-    .stackBox span {
-      color: rgba(250,247,240,.72);
-      font-size: 15px;
-      font-weight: 750;
-      line-height: 1.38;
-    }
-
-    .experienceCard {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background:
-        linear-gradient(135deg, rgba(255,253,247,.90), rgba(255,253,247,.72)),
-        radial-gradient(circle at top right, rgba(125,132,103,.14), transparent 28rem);
-      padding: clamp(26px, 4vw, 44px);
-      box-shadow: 0 18px 55px rgba(75,61,40,.06);
-    }
-
-    .experienceTop {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      flex-wrap: wrap;
-      margin-bottom: 22px;
-    }
-
-    .experienceCompany {
-      font-size: clamp(38px, 6vw, 76px);
-      line-height: .9;
-      letter-spacing: -.08em;
-      font-weight: 900;
-    }
-
-    .experienceDate {
-      display: inline-flex;
-      align-items: center;
-      min-height: 40px;
-      padding: 9px 14px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(22,21,18,.04);
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 850;
-    }
-
-    .experienceRole {
-      color: var(--ink);
-      font-size: 20px;
-      font-weight: 850;
-      letter-spacing: -.03em;
-    }
-
-    .experienceCard p {
-      max-width: 920px;
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 17px;
-      font-weight: 650;
-      line-height: 1.7;
-    }
-
-    .contactPanel {
-      min-height: 78vh;
-      border: 1px solid rgba(255,255,255,.28);
-      border-radius: 38px;
-      background:
-        radial-gradient(circle at 15% 15%, rgba(255,253,247,.20), transparent 30%),
-        radial-gradient(circle at 85% 20%, rgba(214,196,168,.26), transparent 32%),
-        linear-gradient(135deg, #25241F 0%, #3B362D 42%, #7D8467 100%);
-      color: #fff;
-      display: grid;
-      align-items: end;
-      padding: clamp(24px, 5vw, 60px);
-      overflow: hidden;
-      box-shadow: 0 30px 100px rgba(55,45,30,.18);
-    }
-
-    .contactContent h2 {
-      max-width: 980px;
-      font-size: clamp(48px, 9vw, 126px);
-      line-height: .88;
-      letter-spacing: -.09em;
-      font-weight: 900;
-    }
-
-    .contactContent p {
-      max-width: 650px;
-      margin-top: 22px;
-      color: rgba(255,255,255,.82);
-      font-size: clamp(18px, 2vw, 24px);
-      font-weight: 650;
-      letter-spacing: -.03em;
-    }
-
-    .contactActions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 30px;
-    }
-
-    .contactBtn {
-      min-height: 58px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px 24px;
-      border-radius: 999px;
-      background: #FFFDF7;
-      color: #171613;
-      font-weight: 900;
-      letter-spacing: -.03em;
-    }
-
-    .contactBtn.dark {
-      background: rgba(255,255,255,.13);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,.26);
-      backdrop-filter: blur(16px);
-    }
-
-    .footer {
-      padding: 34px 0;
-      color: var(--muted);
-      font-weight: 750;
-    }
-
-    .footerInner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
-
-    .footerLinks {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(22px);
-      transition: opacity .65s ease, transform .65s ease;
-    }
-
-    .reveal.in {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .overlay,
-    .drawer {
-      display: none;
-    }
+    /* ---------- REVEALS ---------- */
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity .85s var(--ease), transform .85s var(--ease); }
+    .reveal.in { opacity: 1; transform: translateY(0); }
 
     @media (max-width: 980px) {
-      .navInner {
-        width: min(560px, calc(100% - 32px));
-      }
-
-      .brandLogo {
-        height: 38px;
-      }
-
-      .navLinks,
-      .navCta {
-        display: none;
-      }
-
-      .menuBtn {
-        display: grid;
-        place-items: center;
-      }
-
-      .sectionHead,
-      .splitGrid {
-        grid-template-columns: 1fr;
-      }
-
-      .heroInner {
-        grid-template-columns: 1fr;
-        width: min(100% - 32px, 760px);
-      }
-
-      .heroVisual {
-        justify-content: flex-start;
-        align-self: start;
-        padding-bottom: 0;
-      }
-
-      .heroCircle {
-        width: clamp(180px, 38vw, 280px);
-      }
-
-      .workItem {
-        grid-template-columns: 150px 1fr;
-      }
-
-      .arrow {
-        display: none;
-      }
-
-      .stackGrid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .overlay,
-      .drawer {
-        display: block;
-      }
-
-      .overlay {
-        position: fixed;
-        inset: 0;
-        z-index: 180;
-        background: rgba(0,0,0,.5);
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity .24s ease, visibility .24s ease;
-      }
-
-      .overlay.active {
-        opacity: 1;
-        visibility: visible;
-      }
-
-      .drawer {
-        position: fixed;
-        top: 18px;
-        right: 18px;
-        z-index: 200;
-        width: min(360px, calc(100% - 36px));
-        border: 1px solid var(--line);
-        border-radius: 30px;
-        background: rgba(250,247,240,.96);
-        backdrop-filter: blur(18px);
-        padding: 18px;
-        box-shadow: 0 24px 80px rgba(0,0,0,.18);
-        transform: translateY(-12px) scale(.96);
-        opacity: 0;
-        pointer-events: none;
-        transition: transform .24s ease, opacity .24s ease;
-      }
-
-      .drawer.active {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-        pointer-events: auto;
-      }
-
-      .drawerHead {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-bottom: 14px;
-        border-bottom: 1px solid var(--line);
-      }
-
-      .drawerLinks {
-        display: grid;
-        padding-top: 12px;
-      }
-
-      .drawerLinks a {
-        padding: 15px 4px;
-        border-bottom: 1px solid var(--line);
-        color: var(--muted);
-        font-weight: 900;
-      }
-
-      .drawerLinks a:last-child {
-        border-bottom: 0;
-      }
+      .heroInner { grid-template-columns: 1fr; }
+      .heroPortraitWrap { order: -1; }
+      .heroPortrait { width: clamp(160px, 40vw, 220px); aspect-ratio: 1; }
+      .aboutGrid, .servicesGrid, .workGrid { grid-template-columns: repeat(2, 1fr); }
+      .skillsGrid, .contactGrid { grid-template-columns: 1fr; }
     }
 
-    @media (max-width: 680px) {
-      .container {
-        width: min(100% - 28px, var(--max));
-      }
-
-      .heroWrap {
-        min-height: 100svh;
-        padding: 10px;
-      }
-
-      .hero {
-        min-height: calc(100svh - 20px);
-        border-radius: 28px;
-      }
-
-      .hero:before {
-        inset: 10px;
-        border-radius: 22px;
-      }
-
-      .heroInner {
-        width: min(100% - 24px, 560px);
-        padding-bottom: 26px;
-      }
-
-      .heroPanel h1 {
-        font-size: clamp(40px, 12vw, 58px);
-      }
-
-      .heroVisual {
-        justify-content: center;
-        order: -1;
-        padding-top: 74px;
-      }
-
-      .heroCircle {
-        width: clamp(150px, 48vw, 230px);
-      }
-
-      .heroPills,
-      .contactActions {
-        align-items: stretch;
-        flex-direction: column;
-      }
-
-      .pill,
-      .contactBtn {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .workItem {
-        grid-template-columns: 1fr;
-        padding: 12px;
-      }
-
-      .workThumb {
-        aspect-ratio: 16 / 11;
-      }
-
-      .stackGrid {
-        grid-template-columns: 1fr;
-      }
-
-      .experienceTop {
-        display: grid;
-      }
-
-      .experienceDate {
-        width: fit-content;
-      }
-
-      .contactPanel {
-        min-height: 82vh;
-        border-radius: 28px;
-      }
-
-      .footerInner {
-        display: grid;
-      }
+    @media (max-width: 640px) {
+      .container { width: min(100% - 28px, var(--max)); }
+      .heroWrap { min-height: 100svh; padding: 10px; }
+      .hero { min-height: calc(100svh - 20px); border-radius: 26px; align-content: start; padding-top: 90px; }
+      .heroInner { width: min(100% - 24px, 560px); padding: 20px 0 32px; }
+      .aboutGrid, .servicesGrid, .workGrid { grid-template-columns: 1fr; }
+      .scrollHint { display: none; }
+      .footerInner { display: grid; text-align: center; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      *,
-      *:before,
-      *:after {
-        transition-duration: .01ms !important;
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-      }
+      html { scroll-behavior: auto; }
+      *, *:before, *:after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+      .heroPanel h1 .word span { transform: none; }
+      .scanline { display: none; }
     }
   </style>
 </head>
-<body>
-  <div class="overlay" id="overlay"></div>
+<body class="no-scroll">
+  <div class="progress" id="progress"></div>
+  <div class="cursorDot" id="cursorDot"></div>
 
-  <aside class="drawer" id="drawer" aria-hidden="true">
-    <div class="drawerHead">
-      <a class="brand" href="#top" aria-label="Home">
-        <img src="logo-light-mode.png" alt="Abdul Rehman" class="brandLogo">
-      </a>
-      <button class="menuBtn" id="closeDrawer" aria-label="Close menu">×</button>
-    </div>
-    <nav class="drawerLinks" aria-label="Mobile navigation">
-      <a href="#work">Work</a>
-      <a href="#services">Services</a>
-      <a href="#capabilities">Capabilities</a>
-      <a href="#experience">Experience</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </aside>
-
-  <header class="nav">
+  <header class="nav" id="nav">
     <div class="navInner">
-      <a class="brand" href="#top" aria-label="Home">
-        <img src="logo-light-mode.png" alt="Abdul Rehman" class="brandLogo">
+      <a href="#top" class="navBrand">
+        <img src="logo-light-mode.png" alt="Abdul Rehman">
+        <span>Abdul Rehman</span>
       </a>
 
-      <nav class="navLinks" aria-label="Primary navigation">
-        <a href="#work">Work</a>
-        <a href="#services">Services</a>
-        <a href="#capabilities">Capabilities</a>
-        <a href="#experience">Experience</a>
+      <div class="navDivider"></div>
+
+      <nav class="navIcons" aria-label="Primary navigation">
+        <a href="#top" class="navIcon" data-section="top"><i class='bx bx-home'></i><span class="tip">Home</span></a>
+        <a href="#about" class="navIcon" data-section="about"><i class='bx bx-user'></i><span class="tip">About</span></a>
+        <a href="#skills" class="navIcon" data-section="skills"><i class='bx bx-code-alt'></i><span class="tip">Skills</span></a>
+        <a href="#work" class="navIcon" data-section="work"><i class='bx bx-briefcase-alt-2'></i><span class="tip">Work</span></a>
+        <a href="#contact" class="navIcon" data-section="contact"><i class='bx bx-message-square-dots'></i><span class="tip">Contact</span></a>
       </nav>
 
-      <a class="navCta" href="#contact">Let’s Talk</a>
-      <button class="menuBtn" id="openDrawer" aria-label="Open menu">☰</button>
+      <div class="navDivider"></div>
+
+      <button class="themeToggle" id="themeToggle" aria-label="Toggle theme"><i class='bx bx-moon' id="themeIcon"></i></button>
+      <a href="#contact" class="navCta magnetic"><span class="label">Start a project</span><i class='bx bx-right-arrow-alt'></i></a>
     </div>
   </header>
 
   <main id="top">
     <section class="heroWrap" aria-label="Intro">
       <div class="hero">
+        <div class="scanline" id="scanline"></div>
         <div class="heroInner">
-          <div class="heroPanel reveal">
-            <h1>Ecommerce Developer</h1>
-            <p>Shopify, WordPress and WooCommerce developer focused on custom sections, responsive pages, product layouts, payment setup support, plugin configuration and website cleanup.</p>
-            <div class="heroPills">
-              <span class="pill"><span class="statusDot"></span>Available for website projects</span>
-              <span class="pill">Lahore, Pakistan</span>
-              <span class="pill">Remote friendly</span>
+          <div class="heroPanel" id="heroPanel">
+            <p class="heroGreeting"><i></i>Hello, I'm</p>
+            <h1 id="heroHeading"></h1>
+            <p class="heroRole mono">Ecommerce Developer — Shopify · WordPress · WooCommerce</p>
+            <p>Building clean, responsive stores from Lahore, Pakistan — custom sections, product layouts and dependable ecommerce support.</p>
+            <div class="heroButtons">
+              <a href="#contact" class="btn btn--solid magnetic">Start a project <i class='bx bx-right-arrow-alt'></i></a>
+              <a href="#about" class="btn btn--ghost magnetic">About me</a>
             </div>
           </div>
-          <div class="heroVisual reveal">
-            <div class="heroCircle">
+          <div class="heroPortraitWrap" id="portraitWrap">
+            <div class="heroPortrait" id="heroPortrait">
               <img src="Profile.png" alt="Abdul Rehman portfolio visual">
+              <span class="heroPortraitTag"><i></i>Lahore, PK</span>
             </div>
           </div>
         </div>
+        <a href="#about" class="scrollHint"><span>Scroll</span><i class='bx bx-mouse'></i></a>
       </div>
     </section>
 
-    <section id="work" class="section container">
+    <div class="marqueeBand" aria-hidden="true">
+      <div class="marqueeTrack" id="marqueeTrack"></div>
+    </div>
+
+    <section id="about" class="section container">
       <div class="sectionHead">
-        <div>
-          <p class="kicker">Portfolio</p>
-          <h2 class="sectionTitle">Selected work</h2>
-        </div>
-        <p class="sectionCopy">Live website references across ecommerce, fashion, healthcare, furniture, fragrance and corporate websites.</p>
+        <p class="kicker">About me</p>
+        <h2 class="sectionTitle reveal">Who I am</h2>
       </div>
 
-      <div class="workList" id="workList"></div>
+      <div class="aboutGrid">
+        <div class="statBox reveal"><i class='bx bx-time-five'></i><strong id="statMonths">—</strong><span>Months at Growex</span></div>
+        <div class="statBox reveal"><i class='bx bx-briefcase-alt'></i><strong id="statProjects">—</strong><span>Live Projects</span></div>
+        <div class="statBox reveal"><i class='bx bx-map-pin'></i><strong>Lahore, PK</strong><span>Based &amp; remote-friendly</span></div>
+      </div>
+
+      <div class="aboutText reveal">
+        <p>Ecommerce and website developer working across Shopify, WordPress and WooCommerce. Currently at Growex, building and maintaining client stores and business websites — theme customization, custom sections, responsive fixes and plugin setup — alongside freelance web development work.</p>
+        <a href="#contact" class="btn btn--dark magnetic">Contact me <i class='bx bx-right-arrow-alt'></i></a>
+      </div>
+    </section>
+
+    <section id="skills" class="section container">
+      <div class="sectionHead">
+        <p class="kicker">My abilities</p>
+        <h2 class="sectionTitle reveal">Skills &amp; tools</h2>
+        <p class="sectionCopy reveal">Technologies and tools used day to day for ecommerce and website builds.</p>
+      </div>
+
+      <div class="skillsGrid">
+        <div class="skillCard reveal">
+          <h3>Ecommerce &amp; CMS</h3>
+          <div class="skillRow"><i class='bx bxs-badge-check'></i>Shopify Liquid development</div>
+          <div class="skillRow"><i class='bx bxs-badge-check'></i>Shopify OS 2.0 custom sections</div>
+          <div class="skillRow"><i class='bx bxs-badge-check'></i>WordPress &amp; Elementor</div>
+          <div class="skillRow"><i class='bx bxs-badge-check'></i>WooCommerce setup &amp; store structure</div>
+        </div>
+        <div class="skillCard reveal">
+          <h3>Frontend &amp; Tools</h3>
+          <div class="skillRow"><i class='bx bxs-badge-check'></i>HTML, CSS &amp; JavaScript</div>
+          <div class="skillRow"><i class='bx bxs-badge-check'></i>Responsive layout &amp; debugging</div>
+          <div class="skillRow"><i class='bx bxs-badge-check'></i>Page builders — GemPages, Breakdance</div>
+          <div class="skillRow"><i class='bx bxs-badge-check'></i>Git &amp; client operations workflow</div>
+        </div>
+      </div>
     </section>
 
     <section id="services" class="section container">
       <div class="sectionHead">
-        <div>
-          <p class="kicker">Services</p>
-          <h2 class="sectionTitle">Practical website development for business use.</h2>
-        </div>
-        <p class="sectionCopy">Clean builds, better structure, responsive fixes and ecommerce improvements for stores and business websites.</p>
+        <p class="kicker">Services</p>
+        <h2 class="sectionTitle reveal">What I offer</h2>
+        <p class="sectionCopy reveal">Practical development, built for business.</p>
       </div>
 
-      <div class="splitGrid">
-        <article class="card reveal">
-          <h3>Shopify development</h3>
-          <p>For ecommerce brands that need clean storefront sections, better product presentation, collection page changes and theme level improvements.</p>
-          <ul>
-            <li>Shopify OS 2.0 custom sections and layout edits</li>
-            <li>Homepage, product page and collection page improvements</li>
-            <li>Mobile responsive fixes for store sections</li>
-            <li>Product content placement, banners and campaign blocks</li>
-          </ul>
-        </article>
-
-        <article class="card reveal">
-          <h3>WordPress and WooCommerce</h3>
-          <p>For service businesses and ecommerce stores that need landing pages, Elementor layouts, WooCommerce setup and plugin based functionality.</p>
-          <ul>
-            <li>Elementor page building and responsive layout cleanup</li>
-            <li>WooCommerce product setup and store page structure</li>
-            <li>Plugin configuration, forms and payment setup support</li>
-            <li>Website maintenance, bug fixing and content updates</li>
-          </ul>
-        </article>
-      </div>
+      <div class="servicesGrid" id="servicesGrid"></div>
     </section>
 
-    <section id="capabilities" class="section container">
+    <section id="work" class="section container">
       <div class="sectionHead">
-        <div>
-          <p class="kicker">Capabilities</p>
-          <h2 class="sectionTitle">Where I can help</h2>
-        </div>
-        <p class="sectionCopy">Focused support for ecommerce stores, WordPress websites and layout issues that directly affect customer experience.</p>
+        <p class="kicker">Portfolio</p>
+        <h2 class="sectionTitle reveal">Recent works</h2>
+        <p class="sectionCopy reveal">Live builds across ecommerce, fashion, healthcare, furniture and fragrance brands.</p>
       </div>
 
-      <div class="stackGrid">
-        <div class="stackBox reveal">
-          <strong>Shopify</strong>
-          <span>Theme customization, sections, product layouts, store visuals and mobile fixes.</span>
-        </div>
-        <div class="stackBox reveal">
-          <strong>WP</strong>
-          <span>WordPress pages, Elementor layouts, plugin setup, forms and service websites.</span>
-        </div>
-        <div class="stackBox reveal">
-          <strong>Woo</strong>
-          <span>WooCommerce setup, product structure, checkout support and store maintenance.</span>
-        </div>
-        <div class="stackBox reveal">
-          <strong>UX</strong>
-          <span>Cleaner spacing, clearer CTAs, better page flow and responsive user experience.</span>
-        </div>
-      </div>
-    </section>
-
-    <section id="experience" class="section container">
-      <div class="sectionHead">
-        <div>
-          <p class="kicker">Experience</p>
-          <h2 class="sectionTitle">Current work</h2>
-        </div>
-        <p class="sectionCopy">Real work experience focused on ecommerce and business website development.</p>
-      </div>
-
-      <article class="experienceCard reveal">
-        <div class="experienceTop">
-          <h3 class="experienceCompany">Growex</h3>
-          <span class="experienceDate">Apr 2024 to Present</span>
-        </div>
-        <div class="experienceRole">Junior Developer</div>
-        <p>Working on ecommerce and business websites using Shopify, WooCommerce and WordPress. Responsibilities include theme customization, responsive design fixes, plugin setup, payment and shipping support, page building, maintenance, troubleshooting and client focused website updates.</p>
-      </article>
-    </section>
-
-    <section class="section container">
-      <div class="splitGrid">
-        <article class="card alt reveal">
-          <h3>Execution approach</h3>
-          <p>I start by understanding the page goal, current layout issue or store requirement. Then I improve structure, spacing, responsiveness and functionality so the website is easier to use and easier to manage.</p>
-        </article>
-
-        <article class="card alt reveal">
-          <h3>Build focus</h3>
-          <p>My focus is not just making a section look nice. I work on practical website details: mobile layout behavior, clear content placement, working links, cleaner product flow, faster visual loading and fewer broken experiences.</p>
-        </article>
-      </div>
+      <div class="workFilters" id="workFilters"></div>
+      <div class="workGrid" id="workGrid" style="position:relative;"></div>
     </section>
 
     <section id="contact" class="section container">
-      <div class="contactPanel reveal">
-        <div class="contactContent">
-          <h2>Reach out anytime</h2>
-          <p>Need help with a Shopify store, WordPress website, WooCommerce page, responsive fix, plugin setup or ecommerce cleanup? Send the project details.</p>
-          <div class="contactActions">
-            <a class="contactBtn" href="mailto:rehmanverse.pro@gmail.com">Email</a>
-            <a class="contactBtn dark" href="tel:+923114981846">Call</a>
+      <div class="sectionHead">
+        <p class="kicker">Get in touch</p>
+        <h2 class="sectionTitle reveal">Let's start a project</h2>
+        <p class="sectionCopy reveal">Send the project details and I'll get back to you.</p>
+      </div>
+
+      <div class="contactGrid">
+        <div class="contactCards">
+          <div class="contactCard reveal">
+            <i class='bx bx-mail-send'></i>
+            <h3>Email</h3>
+            <span>rehmanverse.pro@gmail.com</span>
+            <a href="mailto:rehmanverse.pro@gmail.com" class="ccLink magnetic">Write me <i class='bx bx-right-arrow-alt'></i></a>
           </div>
+          <div class="contactCard reveal">
+            <i class='bx bx-phone-call'></i>
+            <h3>Call</h3>
+            <span>+92 311 4981846</span>
+            <a href="tel:+923114981846" class="ccLink magnetic">Call now <i class='bx bx-right-arrow-alt'></i></a>
+          </div>
+        </div>
+
+        <form class="formCard reveal" id="contactForm">
+          <h3>Send a message</h3>
+          <div class="formGrid">
+            <div class="formRow">
+              <label for="fName">Name</label>
+              <input id="fName" name="name" type="text" placeholder="Your name" required>
+            </div>
+            <div class="formRow">
+              <label for="fEmail">Email</label>
+              <input id="fEmail" name="email" type="email" placeholder="you@email.com" required>
+            </div>
+            <div class="formRow">
+              <label for="fMsg">Message</label>
+              <textarea id="fMsg" name="message" rows="5" placeholder="Tell me about your project" required></textarea>
+            </div>
+            <button type="submit" class="formSubmit" id="formSubmitBtn">Send message <i class='bx bx-right-arrow-alt'></i></button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="section container">
+      <div class="ctaBand reveal">
+        <p class="contactMono">Ready when you are</p>
+        <h2>Have a store or site that needs work?</h2>
+        <div class="heroButtons">
+          <a href="mailto:rehmanverse.pro@gmail.com" class="btn btn--solid magnetic">Email me <i class='bx bx-right-arrow-alt'></i></a>
+          <a href="tel:+923114981846" class="btn btn--ghost magnetic">Call me</a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="container footerInner">
-      <p>© <span id="year"></span> Abdul Rehman. Shopify, WordPress and WooCommerce development.</p>
+  <footer class="footer container">
+    <div class="footerInner">
+      <span class="footerBrand">Abdul Rehman</span>
       <div class="footerLinks">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
         <a href="#work">Work</a>
-        <a href="#services">Services</a>
-        <a href="#capabilities">Capabilities</a>
         <a href="#contact">Contact</a>
       </div>
+      <span class="footerCopy">© <span id="year"></span> — built with care in Lahore, Pakistan.</span>
     </div>
   </footer>
 
+  <div class="modalOverlay" id="modalOverlay">
+    <div class="modalCard" id="modalCard">
+      <button class="modalClose" id="modalClose"><i class='bx bx-x'></i></button>
+      <h3 id="modalTitle"></h3>
+      <p id="modalDesc"></p>
+      <ul class="modalList" id="modalList"></ul>
+    </div>
+  </div>
+
   <script>
     const PROJECTS = [
+      { title: "Bragg Pakistan", url: "https://bragg.pk/", image: "Optimized-Bragg.png", desc: "Apple Cider Vinegar ecommerce reference with product focused presentation, content sections and buying flow support.", tags: ["Ecommerce", "Product pages", "Content"] },
+      { title: "SheikhJee", url: "https://www.sheikhjee.com/", image: "Optimized-SheikhJee.png", desc: "Home furnishings ecommerce reference with catalog structure, product browsing and storefront presentation.", tags: ["Shopify", "Catalog", "CRO"] },
+      { title: "Oak & Teak", url: "https://oakandteak.pk/", image: "Optimized-Oak&Teak.png", desc: "Furniture ecommerce reference with product visuals, category browsing and clean shopping layout.", tags: ["Shopify", "Furniture", "UX"] },
+      { title: "Don Valley Pharma", url: "https://donvalleypharma.com/", image: "Optimized-Donvalley.png", desc: "Corporate WordPress website reference for pharma manufacturing, company profile and structured information pages.", tags: ["WordPress", "Corporate", "Structure"] },
+      { title: "Aap Ka Clinic", url: "https://aapkaclinic.org/", image: "Optimized-Aapkaclinic.png", desc: "Healthcare nonprofit website reference with service information, donation oriented structure and accessible page flow.", tags: ["WordPress", "Healthcare", "Donations"] },
+      { title: "Saira Rizwan", url: "https://sairarizwan.pk/", image: "Optimized-SairaRizwan.png", desc: "Fashion ecommerce reference with collection based product presentation and premium visual browsing.", tags: ["Shopify", "Fashion", "Global"] },
+      { title: "1st Step", url: "https://1ststep.pk/", image: "Optimized-1ststep.png", desc: "Footwear ecommerce reference with product catalog, sale based browsing and customer purchase flow.", tags: ["Shopify", "Footwear", "Sale"] },
+      { title: "JAF Perfumes", url: "https://jafperfumes.com/", image: "Optimized-JAF.png", desc: "D2C fragrance store reference with product education, bundles and fragrance discovery structure.", tags: ["Shopify", "Fragrance", "Bundles"] },
+      { title: "MAYA Pret", url: "https://mayapret.com/", image: "Optimized-Maya-Pret.png", desc: "Luxury fashion ecommerce reference with campaign style visuals, collection presentation and product focused layout.", tags: ["Shopify", "Fashion", "Launch"] }
+    ];
+
+    const SERVICES = [
       {
-        title: "Bragg Pakistan",
-        url: "https://bragg.pk/",
-        image: "Optimized-Bragg.png",
-        desc: "Apple Cider Vinegar ecommerce reference with product focused presentation, content sections and buying flow support.",
-        tags: ["Ecommerce", "Product pages", "Content"]
+        title: "Shopify Development",
+        summary: "Custom storefront sections, product presentation and theme level improvements.",
+        desc: "For ecommerce brands that need clean storefront sections, better product presentation, collection page changes and theme level improvements.",
+        items: ["Shopify OS 2.0 custom sections and layout edits", "Homepage, product page and collection page improvements", "Mobile responsive fixes for store sections", "Product content placement, banners and campaign blocks"]
       },
       {
-        title: "SheikhJee",
-        url: "https://www.sheikhjee.com/",
-        image: "Optimized-SheikhJee.png",
-        desc: "Home furnishings ecommerce reference with catalog structure, product browsing and storefront presentation.",
-        tags: ["Shopify", "Catalog", "CRO"]
+        title: "WordPress & WooCommerce",
+        summary: "Elementor builds, WooCommerce setup and plugin based functionality.",
+        desc: "For service businesses and ecommerce stores that need landing pages, Elementor layouts, WooCommerce setup and plugin based functionality.",
+        items: ["Elementor page building and responsive layout cleanup", "WooCommerce product setup and store page structure", "Plugin configuration, forms and payment setup support", "Website maintenance, bug fixing and content updates"]
       },
       {
-        title: "Oak & Teak",
-        url: "https://oakandteak.pk/",
-        image: "Optimized-Oak&Teak.png",
-        desc: "Furniture ecommerce reference with product visuals, category browsing and clean shopping layout.",
-        tags: ["Shopify", "Furniture", "UX"]
-      },
-      {
-        title: "Don Valley Pharma",
-        url: "https://donvalleypharma.com/",
-        image: "Optimized-Donvalley.png",
-        desc: "Corporate WordPress website reference for pharma manufacturing, company profile and structured information pages.",
-        tags: ["WordPress", "Corporate", "Structure"]
-      },
-      {
-        title: "Aap Ka Clinic",
-        url: "https://aapkaclinic.org/",
-        image: "Optimized-Aapkaclinic.png",
-        desc: "Healthcare nonprofit website reference with service information, donation oriented structure and accessible page flow.",
-        tags: ["WordPress", "Healthcare", "Donations"]
-      },
-      {
-        title: "Saira Rizwan",
-        url: "https://sairarizwan.pk/",
-        image: "Optimized-SairaRizwan.png",
-        desc: "Fashion ecommerce reference with collection based product presentation and premium visual browsing.",
-        tags: ["Shopify", "Fashion", "Global"]
-      },
-      {
-        title: "1st Step",
-        url: "https://1ststep.pk/",
-        image: "Optimized-1ststep.png",
-        desc: "Footwear ecommerce reference with product catalog, sale based browsing and customer purchase flow.",
-        tags: ["Shopify", "Footwear", "Sale"]
-      },
-      {
-        title: "JAF Perfumes",
-        url: "https://jafperfumes.com/",
-        image: "Optimized-JAF.png",
-        desc: "D2C fragrance store reference with product education, bundles and fragrance discovery structure.",
-        tags: ["Shopify", "Fragrance", "Bundles"]
-      },
-      {
-        title: "MAYA Pret",
-        url: "https://mayapret.com/",
-        image: "Optimized-Maya-Pret.png",
-        desc: "Luxury fashion ecommerce reference with campaign style visuals, collection presentation and product focused layout.",
-        tags: ["Shopify", "Fashion", "Launch"]
+        title: "Maintenance & Fixes",
+        summary: "Ongoing support, troubleshooting and performance cleanup for live sites.",
+        desc: "For stores and websites that are already live and need regular upkeep, quick fixes and small improvements without a full rebuild.",
+        items: ["Responsive layout debugging across devices", "Broken link, section and plugin troubleshooting", "Performance and visual loading cleanup", "Small content and section updates on request"]
       }
     ];
 
-    const $ = (selector, root = document) => root.querySelector(selector);
-    const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+    const STACK_TICKER = ["Shopify", "WordPress", "WooCommerce", "Elementor", "Liquid", "Responsive Design", "Theme Customization", "Plugin Setup"];
 
-    function create(tag, className, text) {
+    const $ = (s, r = document) => r.querySelector(s);
+    const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isFinePointer = window.matchMedia("(pointer: fine)").matches;
+
+    function create(tag, className, html) {
       const node = document.createElement(tag);
       if (className) node.className = className;
-      if (text) node.textContent = text;
+      if (html) node.innerHTML = html;
       return node;
     }
 
-    function renderWork() {
-      const list = $("#workList");
+    /* ---------- Theme ---------- */
+    function setupTheme() {
+      const root = document.documentElement;
+      const icon = $("#themeIcon");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (prefersDark) { root.classList.add("dark-theme"); icon.className = "bx bx-sun"; }
+      $("#themeToggle").addEventListener("click", () => {
+        root.classList.toggle("dark-theme");
+        const isDark = root.classList.contains("dark-theme");
+        icon.className = isDark ? "bx bx-sun" : "bx bx-moon";
+      });
+    }
+
+    /* ---------- Hero heading ---------- */
+    function buildHeroHeading() {
+      const heading = $("#heroHeading");
+      const text = "Abdul Rehman";
+      heading.innerHTML = "";
+      text.split(" ").forEach((word, i, arr) => {
+        const wrap = create("span", "word");
+        const inner = create("span");
+        inner.textContent = word + (i < arr.length - 1 ? "\u00A0" : "");
+        wrap.appendChild(inner);
+        heading.appendChild(wrap);
+      });
+    }
+
+    /* ---------- Marquee ---------- */
+    function renderMarquee() {
+      const track = $("#marqueeTrack");
+      const build = () => STACK_TICKER.map((s) => create("span", "marqueeItem", `<b>${s}</b><span class="dot">•</span>`));
+      build().forEach((el) => track.appendChild(el));
+      build().forEach((el) => track.appendChild(el));
+    }
+
+    /* ---------- Services + modal ---------- */
+    function renderServices() {
+      const grid = $("#servicesGrid");
+      SERVICES.forEach((svc, i) => {
+        const card = create("div", "serviceCard reveal");
+        card.style.transitionDelay = `${i * 60}ms`;
+        card.innerHTML = `
+          <div>
+            <span class="svcNum mono">0${i + 1}</span>
+            <h3>${svc.title}</h3>
+          </div>
+          <span class="svcMore">See more <i class='bx bx-right-arrow-alt'></i></span>`;
+        card.addEventListener("click", () => openModal(svc));
+        grid.appendChild(card);
+      });
+    }
+
+    function openModal(svc) {
+      $("#modalTitle").textContent = svc.title;
+      $("#modalDesc").textContent = svc.desc;
+      const list = $("#modalList");
       list.innerHTML = "";
+      svc.items.forEach((item) => {
+        const li = create("li", "", `<i class='bx bx-check-circle'></i><span>${item}</span>`);
+        list.appendChild(li);
+      });
+      $("#modalOverlay").classList.add("active");
+      document.body.classList.add("no-scroll-modal");
+    }
+    function closeModal() { $("#modalOverlay").classList.remove("active"); }
+
+    function setupModal() {
+      $("#modalClose").addEventListener("click", closeModal);
+      $("#modalOverlay").addEventListener("click", (e) => { if (e.target.id === "modalOverlay") closeModal(); });
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+    }
+
+    /* ---------- Work grid + filters ---------- */
+    function renderWork() {
+      const grid = $("#workGrid");
+      const filtersWrap = $("#workFilters");
+      const categories = ["All", ...new Set(PROJECTS.map((p) => p.tags[0]))];
+
+      categories.forEach((cat) => {
+        const btn = create("button", "filterBtn" + (cat === "All" ? " active" : ""), cat);
+        btn.dataset.filter = cat;
+        btn.addEventListener("click", () => applyFilter(cat, btn));
+        filtersWrap.appendChild(btn);
+      });
 
       PROJECTS.forEach((project, index) => {
-        const item = create("a", "workItem reveal");
+        const item = create("a", "workCard reveal");
         item.href = project.url;
         item.target = "_blank";
         item.rel = "noopener noreferrer";
+        item.dataset.cat = project.tags[0];
         item.style.transitionDelay = `${(index % 6) * 40}ms`;
-
-        const thumb = create("div", "workThumb");
-        const img = create("img");
-        img.src = project.image;
-        img.alt = `${project.title} website screenshot`;
-        img.loading = "lazy";
-        img.onerror = () => {
-          thumb.innerHTML = "";
-          thumb.style.display = "grid";
-          thumb.style.placeItems = "center";
-          thumb.style.color = "var(--muted)";
-          thumb.style.fontWeight = "900";
-          thumb.textContent = project.title;
+        item.innerHTML = `
+          <div class="workThumb"><img src="${project.image}" alt="${project.title} website screenshot" loading="lazy"></div>
+          <div class="workBody">
+            <h3>${project.title}</h3>
+            <p>${project.desc}</p>
+            <span class="workLink">Visit site <i class='bx bx-up-arrow-alt'></i></span>
+          </div>`;
+        item.querySelector("img").onerror = function () {
+          this.parentElement.style.display = "grid";
+          this.parentElement.style.placeItems = "center";
+          this.replaceWith(create("span", "mono", project.title));
         };
-        thumb.appendChild(img);
-
-        const main = create("div", "workMain");
-        main.appendChild(create("h3", "", project.title));
-        main.appendChild(create("p", "", project.desc));
-
-        const tags = create("div", "workTags");
-        project.tags.forEach((tag) => tags.appendChild(create("span", "tag", tag)));
-        main.appendChild(tags);
-
-        const arrow = create("div", "arrow", "↗");
-
-        item.append(thumb, main, arrow);
-        list.appendChild(item);
+        grid.appendChild(item);
       });
-
       observeReveals();
     }
 
-    function setupDrawer() {
-      const drawer = $("#drawer");
-      const overlay = $("#overlay");
-      const openDrawer = $("#openDrawer");
-      const closeDrawer = $("#closeDrawer");
-
-      function open() {
-        drawer.classList.add("active");
-        overlay.classList.add("active");
-        drawer.setAttribute("aria-hidden", "false");
-        document.body.classList.add("menu-open");
-      }
-
-      function close() {
-        drawer.classList.remove("active");
-        overlay.classList.remove("active");
-        drawer.setAttribute("aria-hidden", "true");
-        document.body.classList.remove("menu-open");
-      }
-
-      openDrawer.addEventListener("click", open);
-      closeDrawer.addEventListener("click", close);
-      overlay.addEventListener("click", close);
-      $$(".drawerLinks a").forEach((link) => link.addEventListener("click", close));
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") close();
+    function applyFilter(cat, btn) {
+      $$(".filterBtn").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      $$(".workCard").forEach((card) => {
+        const match = cat === "All" || card.dataset.cat === cat;
+        card.classList.toggle("hide", !match);
       });
     }
 
+    /* ---------- Reveal on scroll ---------- */
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("in");
-          observer.unobserve(entry.target);
-        }
+        if (entry.isIntersecting) { entry.target.classList.add("in"); observer.unobserve(entry.target); }
       });
-    }, {
-      threshold: 0.08,
-      rootMargin: "0px 0px -8% 0px"
-    });
+    }, { threshold: 0.08, rootMargin: "0px 0px -8% 0px" });
+    function observeReveals() { $$(".reveal:not(.in)").forEach((item) => observer.observe(item)); }
 
-    function observeReveals() {
-      $$(".reveal:not(.in)").forEach((item) => observer.observe(item));
+    /* ---------- Scroll fx: progress + active nav ---------- */
+    function setupScrollFx() {
+      const progress = $("#progress");
+      const sections = ["top", "about", "skills", "work", "contact"].map((id) => $("#" + id)).filter(Boolean);
+      const navIcons = $$(".navIcon");
+
+      function onScroll() {
+        const doc = document.documentElement;
+        const scrollTop = doc.scrollTop || document.body.scrollTop;
+        const height = doc.scrollHeight - doc.clientHeight;
+        progress.style.width = (height > 0 ? (scrollTop / height) * 100 : 0) + "%";
+
+        let current = sections[0];
+        sections.forEach((sec) => { if (scrollTop >= sec.offsetTop - 160) current = sec; });
+        navIcons.forEach((icon) => icon.classList.toggle("active", icon.dataset.section === current.id));
+      }
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    }
+
+    /* ---------- Magnetic buttons ---------- */
+    function setupMagnetic() {
+      if (!isFinePointer || prefersReducedMotion) return;
+      $$(".magnetic").forEach((el) => {
+        function move(e) {
+          const rect = el.getBoundingClientRect();
+          const relX = e.clientX - rect.left - rect.width / 2;
+          const relY = e.clientY - rect.top - rect.height / 2;
+          el.style.transform = `translate(${relX * 0.22}px, ${relY * 0.28}px)`;
+        }
+        function reset() { el.style.transform = "translate(0, 0)"; }
+        el.addEventListener("mousemove", move);
+        el.addEventListener("mouseleave", reset);
+      });
+    }
+
+    /* ---------- Portrait tilt ---------- */
+    function setupPortraitTilt() {
+      if (!isFinePointer || prefersReducedMotion) return;
+      const wrap = $("#portraitWrap"), portrait = $("#heroPortrait");
+      if (!wrap || !portrait) return;
+      wrap.addEventListener("mousemove", (e) => {
+        const rect = wrap.getBoundingClientRect();
+        const relX = (e.clientX - rect.left) / rect.width - 0.5;
+        const relY = (e.clientY - rect.top) / rect.height - 0.5;
+        portrait.style.transform = `rotateY(${relX * 12}deg) rotateX(${relY * -12}deg)`;
+      });
+      wrap.addEventListener("mouseleave", () => { portrait.style.transform = "rotateY(0) rotateX(0)"; });
+    }
+
+    /* ---------- Custom cursor ---------- */
+    function setupCursor() {
+      if (!isFinePointer || prefersReducedMotion) return;
+      const dot = $("#cursorDot");
+      window.addEventListener("mousemove", (e) => {
+        dot.style.left = e.clientX + "px";
+        dot.style.top = e.clientY + "px";
+        dot.classList.add("show");
+      });
+      window.addEventListener("mouseleave", () => dot.classList.remove("show"));
+      document.addEventListener("mouseover", (e) => {
+        if (e.target.closest("a, button, .workCard, .serviceCard")) dot.classList.add("big");
+      });
+      document.addEventListener("mouseout", (e) => {
+        if (e.target.closest("a, button, .workCard, .serviceCard")) dot.classList.remove("big");
+      });
+    }
+
+    /* ---------- Count-up stats ---------- */
+    function countUp(el, target, duration = 1200) {
+      if (prefersReducedMotion) { el.textContent = target + "+"; return; }
+      const start = performance.now();
+      function tick(now) {
+        const p = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(eased * target) + "+";
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    function setupStats() {
+      const monthsEl = $("#statMonths");
+      const projectsEl = $("#statProjects");
+      const start = new Date(2024, 3, 1);
+      const now = new Date();
+      const months = Math.max(1, (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth()));
+
+      const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            countUp(monthsEl, months);
+            countUp(projectsEl, PROJECTS.length);
+            statsObserver.disconnect();
+          }
+        });
+      }, { threshold: 0.4 });
+      statsObserver.observe($("#statMonths").closest(".aboutGrid"));
+    }
+
+    /* ---------- Contact form -> mailto ---------- */
+    function setupForm() {
+      $("#contactForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = $("#fName").value.trim();
+        const email = $("#fEmail").value.trim();
+        const message = $("#fMsg").value.trim();
+        const subject = encodeURIComponent(`Project inquiry from ${name}`);
+        const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
+        const btn = $("#formSubmitBtn");
+        btn.innerHTML = "Opening your email app… <i class='bx bx-right-arrow-alt'></i>";
+        window.location.href = `mailto:rehmanverse.pro@gmail.com?subject=${subject}&body=${body}`;
+        setTimeout(() => { btn.innerHTML = "Send message <i class='bx bx-right-arrow-alt'></i>"; }, 2600);
+      });
+    }
+
+    function playIntro() {
+      $("#nav").classList.add("in");
+      $("#heroPanel").classList.add("in");
+      if (!prefersReducedMotion) $("#scanline").classList.add("run");
+      document.body.classList.remove("no-scroll");
     }
 
     function init() {
       $("#year").textContent = new Date().getFullYear();
-      setupDrawer();
+      buildHeroHeading();
+      renderMarquee();
+      renderServices();
       renderWork();
+      setupTheme();
+      setupModal();
+      setupScrollFx();
+      setupMagnetic();
+      setupPortraitTilt();
+      setupCursor();
+      setupStats();
+      setupForm();
       observeReveals();
+      requestAnimationFrame(() => requestAnimationFrame(playIntro));
     }
 
     init();
